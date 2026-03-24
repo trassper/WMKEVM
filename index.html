@@ -525,7 +525,7 @@
           <button class="fav-btn ${isFavorite(item.code) ? 'active' : ''}" data-favorite="${item.code}" type="button" aria-label="Favorit ${item.code}">${isFavorite(item.code) ? '★' : '☆'}</button>
           <span class="algo-code">${item.code}</span>
           <span class="algo-name">${item.title}</span>
-          <span class="algo-sub">Tippen öffnet das PDF sofort.</span>
+          
         </article>
       `).join('');
       document.querySelectorAll('.algo-card').forEach(card => {
@@ -549,7 +549,7 @@
         <button class="med-card-btn" data-medlist="${item.code}" type="button">
           <span class="med-code">${item.code}</span>
           <span class="med-name">${item.title}</span>
-          <span class="med-sub">Tippen öffnet das Medikamenten-PDF sofort.</span>
+          
         </button>
       `).join('');
       document.querySelectorAll('[data-medlist]').forEach(button => {
@@ -558,6 +558,7 @@
     }
 
     function openAlgorithm(code) {
+      // PDF wird direkt in der großen Ansicht geladen
       const algorithm = algorithms.find(item => item.code === code);
       if (!algorithm) return;
       currentOpenType = 'algorithm';
@@ -591,7 +592,7 @@
             <button class="med-card-btn" data-med="${med.code}" type="button">
               <span class="med-code">${med.code}</span>
               <span class="med-name">${med.title}</span>
-              <span class="med-sub">Tippen öffnet das Medikamenten-PDF sofort.</span>
+              
             </button>
           `;
         }).join('');
@@ -611,7 +612,7 @@
             <button class="med-card-btn" data-related="${item.code}" type="button">
               <span class="med-code">${item.code}</span>
               <span class="med-name">${item.title}</span>
-              <span class="med-sub">Tippen lädt direkt den nächsten Algorithmus.</span>
+              
             </button>
           `;
         }).join('');
@@ -624,6 +625,7 @@
     }
 
     function openMedication(code, fromMainList = false) {
+      // Medikamenten-PDF wird direkt in der großen Ansicht geladen
       const med = medications[code];
       if (!med) return;
       currentOpenType = 'medication';
