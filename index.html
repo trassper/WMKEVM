@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>EVM Algorithmus App</title>
+  <meta name="theme-color" content="#c62828" />
+  <style>
+    :root {
+      --bg: #f4f6fa;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --brand: #c62828;
+      --soft: #eef2f7;
+      --border: #e5e7eb;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .app {
+      max-width: 860px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: env(safe-area-inset-top) 16px calc(env(safe-area-inset-bottom) + 20px);
+    }
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(244,246,250,0.96);
+      backdrop-filter: blur(12px);
+      padding: 16px 0 12px;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .back-btn {
+      appearance: none;
+      border: none;
+      background: var(--soft);
+      color: var(--text);
+      border-radius: 14px;
+      min-height: 44px;
+      padding: 0 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .title {
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin: 0;
+    }
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+      line-height: 1.4;
+    }
+    .quick-access, .favorites-bar {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 6px 0 2px;
+      margin-top: 10px;
+    }
+    .favorites-wrap { margin-top: 10px; }
+    .mini-label {
+      margin: 4px 0 6px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .search { margin-top: 14px; }
+    .search input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 1rem;
+      background: #fff;
+    }
+    .hero {
+      margin: 14px 0 18px;
+      background: linear-gradient(135deg, #c62828, #e53935);
+      color: white;
+      padding: 18px;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+    .hero h1 { margin: 0 0 8px; font-size: 1.3rem; }
+    .hero p { margin: 0; line-height: 1.45; opacity: .96; }
+    .section-title {
+      margin: 18px 0 12px;
+      color: var(--muted);
+      font-size: .95rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .button-grid, .med-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+    .algo-card, .med-btn, .action-btn {
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      font: inherit;
+    }
+    .algo-card {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 16px 52px 16px 14px;
+      cursor: pointer;
+    }
+    .algo-card:active, .med-btn:active { transform: translateY(1px); }
+    .algo-code, .med-code {
+      display: inline-block;
+      font-size: .8rem;
+      font-weight: 800;
+      color: var(--brand);
+      margin-bottom: 8px;
+      letter-spacing: .04em;
+    }
+    .algo-name, .med-name {
+      display: block;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .fav-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .fav-btn.active {
+      color: var(--brand);
+      background: #fff5f5;
+      border-color: #f2c8c8;
+    }
+    .detail-card, .pdf-card, .med-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+    }
+    .detail-title { font-size: 1.35rem; font-weight: 800; margin: 0 0 8px; }
+    .detail-text { color: var(--muted); line-height: 1.55; margin: 0; }
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .chip {
+      background: #fff5f5;
+      color: var(--brand);
+      border: 1px solid #f2c8c8;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .88rem;
+      font-weight: 700;
+    }
+    .med-btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--card);
+      min-height: 82px;
+      padding: 16px 14px;
+      text-align: left;
+      cursor: pointer;
+    }
+    .detail-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .action-btn {
+      appearance: none;
+      border: none;
+      min-height: 46px;
+      padding: 12px 14px;
+      text-align: center;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .primary { background: var(--brand); color: white; }
+    .secondary { background: var(--soft); color: var(--text); }
+    .pdf-frame-wrap {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #f8fafc;
+    }
+    .pdf-frame {
+      width: 100%;
+      height: 62vh;
+      border: none;
+      display: block;
+      background: #f8fafc;
+    }
+    .hidden { display: none !important; }
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: .84rem;
+      padding: 10px 0 14px;
+    }
+    @media (max-width: 560px) {
+      .button-grid, .med-grid { grid-template-columns: 1fr; }
+      .pdf-frame { height: 56vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="topbar">
+        <button id="backButton" class="back-btn hidden" type="button">← Zurück</button>
+        <div>
+          <h1 class="title">EVM Algorithmen</h1>
+          <p class="subtitle" id="headerSubtitle">Schnellauswahl für Algorithmen und Medikamente</p>
+        </div>
+      </div>
+
+      <div id="favoritesSection" class="favorites-wrap hidden">
+        <div class="mini-label">Favoriten</div>
+        <nav class="favorites-bar" id="favoritesBar"></nav>
+      </div>
+
+      <nav class="quick-access" id="quickAccess">
+        <button class="action-btn primary" type="button" data-quick="REA">Reanimation</button>
+        <button class="action-btn secondary" type="button" data-quick="K9">Anaphylaxie</button>
+        <button class="action-btn secondary" type="button" data-quick="APGAR">APGAR</button>
+        <button class="action-btn secondary" type="button" data-quick="DOSIS">Dosierung</button>
+        <button class="action-btn secondary" type="button" data-quick="AUFZIEH">Aufziehen</button>
+      </nav>
+
+      <div class="search" id="searchWrap">
+        <input id="searchInput" type="search" placeholder="Algorithmus suchen…" />
+      </div>
+    </header>
+
+    <section class="hero" id="homeHero">
+      <h1>iPhone-Web-App auf Basis des Taschenbuchs EVM 2026</h1>
+      <p>Tippe auf einen Algorithmus. In der Detailansicht erscheinen die zugehörigen Medikamente als Schnellauswahl sowie ein Zurück-Button.</p>
+    </section>
+
+    <section id="homeView">
+      <h2 class="section-title">Algorithmen</h2>
+      <div class="button-grid" id="algorithmGrid"></div>
+    </section>
+
+    <section id="detailView" class="hidden">
+      <article class="detail-card">
+        <span class="algo-code" id="detailCode"></span>
+        <h2 class="detail-title" id="detailTitle"></h2>
+        <p class="detail-text" id="detailDescription"></p>
+        <div class="chip-row" id="detailTags"></div>
+        <div class="detail-actions">
+          <a id="detailPdfLink" class="action-btn primary" href="#" target="_blank" rel="noopener">PDF öffnen</a>
+          <a id="detailPdfDownload" class="action-btn secondary" href="#" download>PDF laden</a>
+        </div>
+      </article>
+
+      <article class="detail-card">
+        <h3 class="section-title" style="margin-top:0;">Medikamente Schnellauswahl</h3>
+        <div class="med-grid" id="medGrid"></div>
+      </article>
+
+      <article class="med-card hidden" id="medDetailCard">
+        <span class="med-code" id="medCode"></span>
+        <h3 class="detail-title" id="medTitle"></h3>
+        <p class="detail-text" id="medDescription"></p>
+        <div class="chip-row" id="medMeta"></div>
+        <div class="detail-actions">
+          <a id="medPdfLink" class="action-btn primary" href="#" target="_blank" rel="noopener">Medikamenten-PDF öffnen</a>
+          <button class="action-btn secondary" id="closeMedButton" type="button">Zur Medikamentenliste</button>
+        </div>
+      </article>
+
+      <article class="pdf-card">
+        <h3 class="section-title" style="margin-top:0;">Algorithmus Vorschau</h3>
+        <div class="pdf-frame-wrap">
+          <iframe id="pdfFrame" class="pdf-frame" title="Algorithmus PDF Vorschau"></iframe>
+        </div>
+      </article>
+    </section>
+
+    <p class="footer">Kostenlos nutzbar als HTML-Web-App</p>
+  </div>
+
+  <script>
+    const FAVORITES_KEY = 'evm-favorites-v1';
+
+    const algorithms = [
+      { code: 'K0a', title: 'Basisalgorithmus nicht traumatisch', description: 'Grundstruktur für nicht-traumatologische Notfallbilder.', tags: ['Basis', 'ABCDE', 'Monitoring'], pdf: 'pdfs/algorithmen/K0a.pdf', meds: [] },
+      { code: 'K0b', title: 'Basisalgorithmus traumatisch', description: 'Grundstruktur für traumatologische Notfallbilder.', tags: ['Trauma', 'xABCDE'], pdf: 'pdfs/algorithmen/K0b.pdf', meds: [] },
+      { code: 'K1', title: 'Akutes Koronarsyndrom', description: 'ACS mit direkter Medikamentenauswahl.', tags: ['Thoraxschmerz', 'Monitoring'], pdf: 'pdfs/algorithmen/K1.pdf', meds: ['M13', 'M1', 'M17'] },
+      { code: 'K2', title: 'Linksherzinsuffizienz mit akuter Dyspnoe', description: 'Akute Dyspnoe.', tags: ['Dyspnoe', 'CPAP'], pdf: 'pdfs/algorithmen/K2.pdf', meds: ['M13'] },
+      { code: 'K3', title: 'Bedrohliche Bradykardie', description: 'Leitliniennahe Erstversorgung.', tags: ['Bradykardie', 'EKG'], pdf: 'pdfs/algorithmen/K3.pdf', meds: ['M4', 'M2'] },
+      { code: 'K4', title: 'Hypertensiver Notfall', description: 'Direkter Zugriff auf den Algorithmus.', tags: ['RR', 'Notfall'], pdf: 'pdfs/algorithmen/K4.pdf', meds: ['M26'] },
+      { code: 'K5', title: 'Obstruktive Atemwegserkrankung', description: 'Strukturierte Ansicht für Atemwegserkrankungen.', tags: ['COPD', 'Asthma'], pdf: 'pdfs/algorithmen/K5.pdf', meds: ['M22', 'M23', 'M14'] },
+      { code: 'K6', title: 'Atemwegserkrankung Kinder', description: 'Pädiatrische Variante.', tags: ['Kinder', 'Asthma'], pdf: 'pdfs/algorithmen/K6.pdf', meds: ['M22', 'M23', 'M14'] },
+      { code: 'K7', title: 'Atemwegsobstruktion', description: 'Fokus auf Atemwege.', tags: ['Atemwege'], pdf: 'pdfs/algorithmen/K7.pdf', meds: ['M2', 'M22'] },
+      { code: 'K8', title: 'Hypoglykämie', description: 'Versorgung Hypoglykämie.', tags: ['BZ'], pdf: 'pdfs/algorithmen/K8.pdf', meds: ['M25', 'M12'] },
+      { code: 'K9', title: 'Anaphylaxie', description: 'Allergische Reaktion.', tags: ['Allergie'], pdf: 'pdfs/algorithmen/K9.pdf', meds: ['M6', 'M22', 'M2'] },
+      { code: 'K10', title: 'Status Epilepticus', description: 'Krampfanfall.', tags: ['Neurologie'], pdf: 'pdfs/algorithmen/K10.pdf', meds: ['M16', 'M15'] },
+      { code: 'K11', title: 'Schlaganfall', description: 'Stroke Algorithmus.', tags: ['FAST'], pdf: 'pdfs/algorithmen/K11.pdf', meds: [] },
+      { code: 'K12', title: 'Bevorstehende Geburt', description: 'Geburt.', tags: ['Geburt'], pdf: 'pdfs/algorithmen/K12.pdf', meds: [] },
+      { code: 'K13', title: 'Einsetzende Geburt', description: 'Geburt.', tags: ['Geburt'], pdf: 'pdfs/algorithmen/K13.pdf', meds: [] },
+      { code: 'K14', title: 'Neugeborenes', description: 'Erstversorgung.', tags: ['APGAR'], pdf: 'pdfs/algorithmen/K14.pdf', meds: [] },
+      { code: 'K15', title: 'Post Reanimation', description: 'Nach ROSC.', tags: ['ROSC'], pdf: 'pdfs/algorithmen/K15.pdf', meds: [] },
+      { code: 'K16', title: 'Schmerz Übersicht', description: 'Schmerz.', tags: ['Analgesie'], pdf: 'pdfs/algorithmen/K16.pdf', meds: [] },
+      { code: 'K16a', title: 'Abdomen Schmerz', description: 'Abdomen.', tags: ['Abdomen'], pdf: 'pdfs/algorithmen/K16a.pdf', meds: ['M5', 'M18', 'M20'] },
+      { code: 'K16b', title: 'Trauma Schmerz', description: 'Trauma.', tags: ['Trauma'], pdf: 'pdfs/algorithmen/K16b.pdf', meds: ['M9', 'M16'] },
+      { code: 'K16c', title: 'Thorax Schmerz', description: 'Thorax.', tags: ['Thorax'], pdf: 'pdfs/algorithmen/K16c.pdf', meds: ['M17'] },
+      { code: 'K16d', title: 'Rücken Schmerz', description: 'Rücken.', tags: ['Rücken'], pdf: 'pdfs/algorithmen/K16d.pdf', meds: ['M18'] },
+      { code: 'K17', title: 'Übelkeit', description: 'Antiemese.', tags: ['Übelkeit'], pdf: 'pdfs/algorithmen/K17.pdf', meds: ['M7'] },
+      { code: 'K18', title: 'Sepsis', description: 'Sepsis.', tags: ['Schock'], pdf: 'pdfs/algorithmen/K18.pdf', meds: [] },
+      { code: 'K19', title: 'CO Vergiftung', description: 'CO.', tags: ['CO'], pdf: 'pdfs/algorithmen/K19.pdf', meds: [] },
+      { code: 'REA', title: 'Reanimation', description: 'ALS.', tags: ['Reanimation'], pdf: 'pdfs/algorithmen/REA.pdf', meds: ['M2', 'M3'] },
+      { code: 'APGAR', title: 'APGAR Score', description: 'Neugeborenen Score.', tags: ['Score'], pdf: 'pdfs/algorithmen/APGAR.pdf', meds: [] },
+      { code: 'DOSIS', title: 'Dosiertabelle', description: 'Dosierungen.', tags: ['Dosierung'], pdf: 'pdfs/algorithmen/DOSIS.pdf', meds: [] },
+      { code: 'AUFZIEH', title: 'Aufziehanleitung', description: 'Aufziehen.', tags: ['Zubereitung'], pdf: 'pdfs/algorithmen/AUFZIEH.pdf', meds: [] }
+    ];
+
+    const medications = {
+      M1: { code: 'M1', title: 'Acetylsalicylsäure', description: 'ASS im EVM-Kontext.', meta: ['ACS', 'ASS'], pdf: 'pdfs/medikamente/M1.pdf' },
+      M2: { code: 'M2', title: 'Adrenalin', description: 'Notfallmedikament.', meta: ['Notfall'], pdf: 'pdfs/medikamente/M2.pdf' },
+      M3: { code: 'M3', title: 'Amiodaron', description: 'Rhythmustherapie.', meta: ['Reanimation'], pdf: 'pdfs/medikamente/M3.pdf' },
+      M4: { code: 'M4', title: 'Atropin', description: 'Bradykardie.', meta: ['Bradykardie'], pdf: 'pdfs/medikamente/M4.pdf' },
+      M5: { code: 'M5', title: 'Butylscopolamin', description: 'Abdomen.', meta: ['Spasmolyse'], pdf: 'pdfs/medikamente/M5.pdf' },
+      M6: { code: 'M6', title: 'Clemastinfumarat', description: 'Allergie.', meta: ['Antihistaminikum'], pdf: 'pdfs/medikamente/M6.pdf' },
+      M7: { code: 'M7', title: 'Dimenhydrinat', description: 'Antiemese.', meta: ['Übelkeit'], pdf: 'pdfs/medikamente/M7.pdf' },
+      M9: { code: 'M9', title: 'Esketamin', description: 'Trauma Schmerz.', meta: ['Analgesie'], pdf: 'pdfs/medikamente/M9.pdf' },
+      M12: { code: 'M12', title: 'Glukose', description: 'Hypoglykämie.', meta: ['BZ'], pdf: 'pdfs/medikamente/M12.pdf' },
+      M13: { code: 'M13', title: 'Glycerolnitrat', description: 'ACS und Dyspnoe.', meta: ['Nitrat'], pdf: 'pdfs/medikamente/M13.pdf' },
+      M14: { code: 'M14', title: 'Ipratropiumbromid', description: 'Atemwege.', meta: ['Vernebler'], pdf: 'pdfs/medikamente/M14.pdf' },
+      M15: { code: 'M15', title: 'Levetiracetam', description: 'Status epilepticus.', meta: ['Neurologie'], pdf: 'pdfs/medikamente/M15.pdf' },
+      M16: { code: 'M16', title: 'Midazolam', description: 'Krampfanfall und Sedierung.', meta: ['Sedierung'], pdf: 'pdfs/medikamente/M16.pdf' },
+      M17: { code: 'M17', title: 'Morphin', description: 'Thoraxschmerz.', meta: ['Analgesie'], pdf: 'pdfs/medikamente/M17.pdf' },
+      M18: { code: 'M18', title: 'Nalbuphin', description: 'Schmerz.', meta: ['Analgesie'], pdf: 'pdfs/medikamente/M18.pdf' },
+      M20: { code: 'M20', title: 'Paracetamol', description: 'Schmerz.', meta: ['Analgesie'], pdf: 'pdfs/medikamente/M20.pdf' },
+      M22: { code: 'M22', title: 'Prednisolon', description: 'Atemwege und Allergie.', meta: ['Entzündung'], pdf: 'pdfs/medikamente/M22.pdf' },
+      M23: { code: 'M23', title: 'Salbutamol', description: 'Atemwege.', meta: ['Bronchodilatation'], pdf: 'pdfs/medikamente/M23.pdf' },
+      M25: { code: 'M25', title: 'Thiamin', description: 'Hypoglykämie.', meta: ['Begleitmedikation'], pdf: 'pdfs/medikamente/M25.pdf' },
+      M26: { code: 'M26', title: 'Urapidil', description: 'Hypertonie.', meta: ['RR-Senkung'], pdf: 'pdfs/medikamente/M26.pdf' }
+    };
+
+    const algorithmGrid = document.getElementById('algorithmGrid');
+    const searchInput = document.getElementById('searchInput');
+    const homeView = document.getElementById('homeView');
+    const detailView = document.getElementById('detailView');
+    const homeHero = document.getElementById('homeHero');
+    const backButton = document.getElementById('backButton');
+    const searchWrap = document.getElementById('searchWrap');
+    const quickAccess = document.getElementById('quickAccess');
+    const favoritesSection = document.getElementById('favoritesSection');
+    const favoritesBar = document.getElementById('favoritesBar');
+    const headerSubtitle = document.getElementById('headerSubtitle');
+    const detailCode = document.getElementById('detailCode');
+    const detailTitle = document.getElementById('detailTitle');
+    const detailDescription = document.getElementById('detailDescription');
+    const detailTags = document.getElementById('detailTags');
+    const detailPdfLink = document.getElementById('detailPdfLink');
+    const detailPdfDownload = document.getElementById('detailPdfDownload');
+    const pdfFrame = document.getElementById('pdfFrame');
+    const medGrid = document.getElementById('medGrid');
+    const medDetailCard = document.getElementById('medDetailCard');
+    const medCode = document.getElementById('medCode');
+    const medTitle = document.getElementById('medTitle');
+    const medDescription = document.getElementById('medDescription');
+    const medMeta = document.getElementById('medMeta');
+    const medPdfLink = document.getElementById('medPdfLink');
+    const closeMedButton = document.getElementById('closeMedButton');
+
+    function getFavorites() {
+      try {
+        const raw = localStorage.getItem(FAVORITES_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function setFavorites(items) {
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(items));
+    }
+
+    function isFavorite(code) {
+      return getFavorites().includes(code);
+    }
+
+    function toggleFavorite(code) {
+      const favorites = getFavorites();
+      const next = favorites.includes(code)
+        ? favorites.filter(item => item !== code)
+        : [...favorites, code];
+      setFavorites(next);
+      renderFavoritesBar();
+      renderAlgorithms(searchInput.value);
+    }
+
+    function renderFavoritesBar() {
+      const favorites = getFavorites();
+      if (!favorites.length) {
+        favoritesSection.classList.add('hidden');
+        favoritesBar.innerHTML = '';
+        return;
+      }
+
+      favoritesSection.classList.remove('hidden');
+      favoritesBar.innerHTML = favorites.map(code => {
+        const item = algorithms.find(entry => entry.code === code);
+        if (!item) return '';
+        return `<button class="action-btn secondary" type="button" data-favorite-open="${item.code}">${item.code}</button>`;
+      }).join('');
+
+      document.querySelectorAll('[data-favorite-open]').forEach(button => {
+        button.addEventListener('click', () => openAlgorithm(button.dataset.favoriteOpen));
+      });
+    }
+
+    function renderAlgorithms(filter = '') {
+      const term = filter.trim().toLowerCase();
+      const filtered = algorithms.filter(item => item.code.toLowerCase().includes(term) || item.title.toLowerCase().includes(term));
+
+      algorithmGrid.innerHTML = filtered.map(item => `
+        <article class="algo-card" data-code="${item.code}" tabindex="0" role="button" aria-label="${item.code} ${item.title}">
+          <button class="fav-btn ${isFavorite(item.code) ? 'active' : ''}" data-favorite="${item.code}" type="button" aria-label="Favorit ${item.code}">${isFavorite(item.code) ? '★' : '☆'}</button>
+          <span class="algo-code">${item.code}</span>
+          <span class="algo-name">${item.title}</span>
+        </article>
+      `).join('');
+
+      document.querySelectorAll('.algo-card').forEach(card => {
+        card.addEventListener('click', event => {
+          if (event.target.closest('.fav-btn')) return;
+          openAlgorithm(card.dataset.code);
+        });
+        card.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            if (event.target.closest('.fav-btn')) return;
+            openAlgorithm(card.dataset.code);
+          }
+        });
+      });
+
+      document.querySelectorAll('.fav-btn').forEach(button => {
+        button.addEventListener('click', event => {
+          event.stopPropagation();
+          toggleFavorite(button.dataset.favorite);
+        });
+      });
+    }
+
+    function openAlgorithm(code) {
+      const algorithm = algorithms.find(item => item.code === code);
+      if (!algorithm) return;
+
+      homeView.classList.add('hidden');
+      homeHero.classList.add('hidden');
+      detailView.classList.remove('hidden');
+      backButton.classList.remove('hidden');
+      searchWrap.classList.add('hidden');
+      quickAccess.classList.add('hidden');
+      favoritesSection.classList.add('hidden');
+      headerSubtitle.textContent = 'Algorithmusansicht mit Medikamenten-Schnellauswahl';
+
+      detailCode.textContent = algorithm.code;
+      detailTitle.textContent = algorithm.title;
+      detailDescription.textContent = algorithm.description;
+      detailTags.innerHTML = algorithm.tags.map(tag => `<span class="chip">${tag}</span>`).join('');
+      detailPdfLink.href = algorithm.pdf;
+      detailPdfDownload.href = algorithm.pdf;
+      pdfFrame.src = algorithm.pdf;
+      cacheFile(algorithm.pdf);
+
+      if (algorithm.meds.length === 0) {
+        medGrid.innerHTML = '<div class="detail-text">Für diesen Eintrag ist aktuell keine Medikamenten-Schnellauswahl hinterlegt.</div>';
+      } else {
+        medGrid.innerHTML = algorithm.meds.map(code => {
+          const med = medications[code];
+          if (!med) return '';
+          return `
+            <button class="med-btn" data-med="${med.code}" type="button">
+              <span class="med-code">${med.code}</span>
+              <span class="med-name">${med.title}</span>
+            </button>
+          `;
+        }).join('');
+
+        document.querySelectorAll('.med-btn').forEach(button => {
+          button.addEventListener('click', () => openMedication(button.dataset.med));
+        });
+      }
+
+      closeMedication();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openMedication(code) {
+      const med = medications[code];
+      if (!med) return;
+
+      medDetailCard.classList.remove('hidden');
+      medCode.textContent = med.code;
+      medTitle.textContent = med.title;
+      medDescription.textContent = med.description;
+      medMeta.innerHTML = med.meta.map(entry => `<span class="chip">${entry}</span>`).join('');
+      medPdfLink.href = med.pdf;
+      cacheFile(med.pdf);
+    }
+
+    function closeMedication() {
+      medDetailCard.classList.add('hidden');
+      medCode.textContent = '';
+      medTitle.textContent = '';
+      medDescription.textContent = '';
+      medMeta.innerHTML = '';
+      medPdfLink.href = '#';
+    }
+
+    function goHome() {
+      detailView.classList.add('hidden');
+      homeView.classList.remove('hidden');
+      homeHero.classList.remove('hidden');
+      backButton.classList.add('hidden');
+      searchWrap.classList.remove('hidden');
+      quickAccess.classList.remove('hidden');
+      renderFavoritesBar();
+      headerSubtitle.textContent = 'Schnellauswahl für Algorithmen und Medikamente';
+      pdfFrame.src = '';
+      closeMedication();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function cacheFile(url) {
+      if (!('caches' in window)) return;
+      try {
+        const cache = await caches.open('evm-app-v1');
+        await cache.add(url);
+      } catch {}
+    }
+
+    searchInput.addEventListener('input', () => renderAlgorithms(searchInput.value));
+    backButton.addEventListener('click', goHome);
+    closeMedButton.addEventListener('click', closeMedication);
+
+    document.querySelectorAll('[data-quick]').forEach(button => {
+      button.addEventListener('click', () => openAlgorithm(button.dataset.quick));
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+
+    renderFavoritesBar();
+    renderAlgorithms();
+  </script>
+</body>
+</html>
