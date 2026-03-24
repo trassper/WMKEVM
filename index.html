@@ -340,23 +340,6 @@
     </section>
 
     <section id="detailView" class="hidden">
-      <article class="pdf-card">
-        <div class="pdf-toolbar">
-          <div class="pdf-toolbar-left">
-            <button id="inlineBackButton" class="back-btn" type="button">← Zurück</button>
-            <span class="algo-code" id="detailCode"></span>
-            <strong id="detailToolbarTitle"></strong>
-          </div>
-          <div class="pdf-toolbar-right">
-            <a id="detailPdfLink" class="action-btn primary" href="#" target="_blank" rel="noopener">PDF öffnen</a>
-            <a id="detailPdfDownload" class="action-btn secondary" href="#" download>PDF laden</a>
-          </div>
-        </div>
-        <div class="pdf-frame-wrap">
-          <iframe id="pdfFrame" class="pdf-frame" title="PDF Ansicht"></iframe>
-        </div>
-      </article>
-
       <article class="detail-card" id="detailInfoCard">
         <h2 class="detail-title" id="detailTitle"></h2>
         <p class="detail-text" id="detailDescription"></p>
@@ -456,7 +439,6 @@
     const detailTags = document.getElementById('detailTags');
     const detailPdfLink = document.getElementById('detailPdfLink');
     const detailPdfDownload = document.getElementById('detailPdfDownload');
-    const pdfFrame = document.getElementById('pdfFrame');
     const medGrid = document.getElementById('medGrid');
     const relatedGrid = document.getElementById('relatedGrid');
     const detailMedsSection = document.getElementById('detailMedsSection');
@@ -575,8 +557,8 @@
       detailTags.innerHTML = algorithm.tags.map(tag => `<span class="chip">${tag}</span>`).join('');
       detailPdfLink.href = algorithm.pdf;
       detailPdfDownload.href = algorithm.pdf;
-      pdfFrame.src = algorithm.pdf;
       cacheFile(algorithm.pdf);
+      try { window.open(algorithm.pdf, '_blank'); } catch {}
 
       detailInfoCard.classList.remove('hidden');
       detailMedsSection.classList.remove('hidden');
@@ -642,8 +624,8 @@
       detailTags.innerHTML = med.meta.map(entry => `<span class="chip">${entry}</span>`).join('');
       detailPdfLink.href = med.pdf;
       detailPdfDownload.href = med.pdf;
-      pdfFrame.src = med.pdf;
       cacheFile(med.pdf);
+      try { window.open(med.pdf, '_blank'); } catch {}
 
       detailInfoCard.classList.remove('hidden');
       detailMedsSection.classList.add('hidden');
@@ -657,7 +639,6 @@
     function goHome() {
       detailView.classList.add('hidden');
       backButton.classList.add('hidden');
-      pdfFrame.src = '';
       currentOpenType = null;
       setMode(currentMode);
       window.scrollTo({ top: 0, behavior: 'smooth' });
