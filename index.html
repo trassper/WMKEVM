@@ -21,19 +21,23 @@
       --shadow: 0 10px 30px rgba(0,0,0,0.08);
       --radius: 22px;
     }
+
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
     }
+
     .app {
       max-width: 920px;
       margin: 0 auto;
       min-height: 100vh;
       padding: env(safe-area-inset-top) 16px calc(env(safe-area-inset-bottom) + 24px);
     }
+
     .header {
       position: sticky;
       top: 0;
@@ -42,22 +46,26 @@
       backdrop-filter: blur(12px);
       padding: 14px 0 12px;
     }
+
     .topbar {
       display: flex;
       align-items: center;
       gap: 10px;
       margin-bottom: 10px;
     }
+
     .back-btn,
-    .action-btn,
     .quick-btn,
     .fav-btn,
     .algo-card,
     .med-card-btn,
-    .tab-btn {
+    .tab-btn,
+    .nav-btn {
       font: inherit;
     }
-    .back-btn {
+
+    .back-btn,
+    .nav-btn {
       appearance: none;
       border: none;
       background: var(--soft);
@@ -68,18 +76,14 @@
       font-weight: 700;
       cursor: pointer;
     }
+
     .title {
       font-size: 1.7rem;
       font-weight: 800;
       margin: 0;
       line-height: 1.1;
     }
-    .subtitle {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 0.96rem;
-      line-height: 1.4;
-    }
+
     .mini-label,
     .section-title {
       color: var(--muted);
@@ -89,11 +93,13 @@
       text-transform: uppercase;
       margin: 18px 0 10px;
     }
+
     .tabs {
       display: flex;
       gap: 10px;
       margin: 8px 0 12px;
     }
+
     .tab-btn {
       appearance: none;
       border: none;
@@ -105,16 +111,19 @@
       background: var(--soft);
       color: var(--text);
     }
+
     .tab-btn.active {
       background: var(--brand);
       color: white;
     }
+
     .favorites-row {
       display: flex;
       gap: 10px;
       overflow-x: auto;
       padding-bottom: 2px;
     }
+
     .search input {
       width: 100%;
       border: 1px solid var(--border);
@@ -124,23 +133,23 @@
       background: #fff;
       outline: none;
     }
-    .quick-btn,
-    .action-btn {
+
+    .quick-btn {
       appearance: none;
       border: none;
       border-radius: 16px;
       min-height: 44px;
       padding: 12px 14px;
       cursor: pointer;
-      text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
       white-space: nowrap;
+      background: var(--soft);
+      color: var(--text);
     }
-    .primary { background: var(--brand); color: white; }
-    .secondary { background: var(--soft); color: var(--text); }
+
     .button-grid,
     .med-grid,
     .related-grid {
@@ -148,6 +157,7 @@
       gap: 12px;
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
     .algo-card,
     .med-card-btn {
       appearance: none;
@@ -162,6 +172,7 @@
       position: relative;
       min-height: 92px;
     }
+
     .fav-btn {
       appearance: none;
       border: 1px solid var(--border);
@@ -176,11 +187,13 @@
       font-size: 1rem;
       line-height: 1;
     }
+
     .fav-btn.active {
       background: #fff5f5;
       color: var(--brand);
       border-color: #f2c8c8;
     }
+
     .algo-code,
     .med-code {
       display: inline-block;
@@ -190,6 +203,7 @@
       letter-spacing: 0.04em;
       margin-bottom: 8px;
     }
+
     .algo-name,
     .med-name {
       display: block;
@@ -199,17 +213,8 @@
       color: var(--text);
       padding-right: 40px;
     }
-    .algo-sub,
-    .med-sub {
-      display: block;
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.35;
-    }
-    .detail-card,
-    .pdf-card,
-    .med-detail-card {
+
+    .detail-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -217,7 +222,8 @@
       box-shadow: var(--shadow);
       margin-bottom: 14px;
     }
-    .pdf-toolbar {
+
+    .detail-toolbar {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
@@ -225,44 +231,35 @@
       justify-content: space-between;
       margin-bottom: 12px;
     }
-    .pdf-toolbar-left,
-    .pdf-toolbar-right {
+
+    .detail-toolbar-left,
+    .detail-toolbar-right {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
       align-items: center;
     }
-    .pdf-frame-wrap {
-      width: 100%;
-      border-radius: 18px;
-      overflow: hidden;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-    }
-    .pdf-frame {
-      width: 100%;
-      height: 82vh;
-      border: none;
-      display: block;
-      background: #f8fafc;
-    }
+
     .detail-title {
       font-size: 1.3rem;
       font-weight: 800;
       margin: 0 0 8px;
       line-height: 1.2;
     }
+
     .detail-text {
       margin: 0;
       color: var(--muted);
       line-height: 1.55;
     }
+
     .chip-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       margin-top: 14px;
     }
+
     .chip {
       background: #fff5f5;
       color: var(--brand);
@@ -272,6 +269,7 @@
       font-size: 0.88rem;
       font-weight: 700;
     }
+
     .stack-title {
       margin: 0 0 10px;
       font-size: 1rem;
@@ -280,6 +278,7 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
+
     .empty-box {
       color: var(--muted);
       background: #fafbfc;
@@ -288,19 +287,27 @@
       padding: 14px;
       line-height: 1.5;
     }
+
     .hidden { display: none !important; }
+
     .footer {
       text-align: center;
       color: var(--muted);
       font-size: 0.84rem;
       padding: 10px 0 14px;
     }
+
     @media (max-width: 700px) {
       .button-grid,
       .med-grid,
-      .related-grid { grid-template-columns: 1fr; }
-      .pdf-frame { height: 68vh; }
-      .pdf-toolbar { flex-direction: column; align-items: stretch; }
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
     }
   </style>
 </head>
@@ -325,7 +332,7 @@
       </div>
 
       <div class="search">
-        <input id="searchInput" type="search" placeholder="Algorithmus oder Medikament suchen…" />
+        <input id="searchInput" type="search" placeholder="Algorithmus suchen…" />
       </div>
     </header>
 
@@ -340,7 +347,18 @@
     </section>
 
     <section id="detailView" class="hidden">
-      <article class="detail-card" id="detailInfoCard">
+      <article class="detail-card">
+        <div class="detail-toolbar">
+          <div class="detail-toolbar-left">
+            <button id="inlineBackButton" class="nav-btn" type="button">← Zurück</button>
+            <span class="algo-code" id="detailCode"></span>
+            <strong id="detailToolbarTitle"></strong>
+          </div>
+          <div class="detail-toolbar-right">
+            <button id="openPdfNowButton" class="nav-btn" type="button">PDF jetzt öffnen</button>
+          </div>
+        </div>
+
         <h2 class="detail-title" id="detailTitle"></h2>
         <p class="detail-text" id="detailDescription"></p>
         <div class="chip-row" id="detailTags"></div>
@@ -363,7 +381,7 @@
   <script>
     const FAVORITES_KEY = 'evm-favorites-v1';
     let currentMode = 'algorithms';
-    let currentOpenType = null;
+    let currentOpenPdf = '';
 
     const algorithms = [
       { code: 'K0a', title: 'Basisalgorithmus nicht traumatisch', description: 'Grundstruktur für nicht-traumatologische Notfallbilder.', tags: ['Basis', 'ABCDE', 'Monitoring'], pdf: 'pdfs/algorithmen/K0a.pdf', meds: [], related: [] },
@@ -437,13 +455,16 @@
     const detailTitle = document.getElementById('detailTitle');
     const detailDescription = document.getElementById('detailDescription');
     const detailTags = document.getElementById('detailTags');
-    const detailPdfLink = document.getElementById('detailPdfLink');
-    const detailPdfDownload = document.getElementById('detailPdfDownload');
     const medGrid = document.getElementById('medGrid');
     const relatedGrid = document.getElementById('relatedGrid');
     const detailMedsSection = document.getElementById('detailMedsSection');
     const detailRelatedSection = document.getElementById('detailRelatedSection');
-    const detailInfoCard = document.getElementById('detailInfoCard');
+    const openPdfNowButton = document.getElementById('openPdfNowButton');
+
+    function openPdfDirect(url) {
+      currentOpenPdf = url;
+      window.location.href = url;
+    }
 
     function getFavorites() {
       try {
@@ -454,35 +475,46 @@
         return [];
       }
     }
+
     function setFavorites(items) {
       localStorage.setItem(FAVORITES_KEY, JSON.stringify(items));
     }
+
     function isFavorite(code) {
       return getFavorites().includes(code);
     }
+
     function toggleFavorite(code) {
       const favorites = getFavorites();
-      const next = favorites.includes(code) ? favorites.filter(item => item !== code) : [...favorites, code];
+      const next = favorites.includes(code)
+        ? favorites.filter(item => item !== code)
+        : [...favorites, code];
       setFavorites(next);
       renderFavoritesBar();
       renderAlgorithms(searchInput.value);
     }
+
     function renderFavoritesBar() {
-      const favorites = getFavorites();
-      if (!favorites.length || currentMode !== 'algorithms' || !detailView.classList.contains('hidden') === false) {
-        // handled below by visibility toggles
-      }
-      if (!favorites.length || currentMode !== 'algorithms' || !detailView.classList.contains('hidden')) {
+      if (currentMode !== 'algorithms' || !detailView.classList.contains('hidden')) {
         favoritesSection.classList.add('hidden');
         favoritesBar.innerHTML = '';
         return;
       }
+
+      const favorites = getFavorites();
+      if (!favorites.length) {
+        favoritesSection.classList.add('hidden');
+        favoritesBar.innerHTML = '';
+        return;
+      }
+
       favoritesSection.classList.remove('hidden');
       favoritesBar.innerHTML = favorites.map(code => {
         const item = algorithms.find(entry => entry.code === code);
         if (!item) return '';
-        return `<button class="quick-btn secondary" type="button" data-favorite-open="${item.code}">${item.code}</button>`;
+        return `<button class="quick-btn" type="button" data-favorite-open="${item.code}">${item.code}</button>`;
       }).join('');
+
       document.querySelectorAll('[data-favorite-open]').forEach(button => {
         button.addEventListener('click', () => openAlgorithm(button.dataset.favoriteOpen));
       });
@@ -501,21 +533,27 @@
 
     function renderAlgorithms(filter = '') {
       const term = filter.trim().toLowerCase();
-      const filtered = algorithms.filter(item => item.code.toLowerCase().includes(term) || item.title.toLowerCase().includes(term));
+      const filtered = algorithms.filter(item =>
+        item.code.toLowerCase().includes(term) || item.title.toLowerCase().includes(term)
+      );
+
       algorithmGrid.innerHTML = filtered.map(item => `
         <article class="algo-card" data-code="${item.code}" tabindex="0" role="button" aria-label="${item.code} ${item.title}">
-          <button class="fav-btn ${isFavorite(item.code) ? 'active' : ''}" data-favorite="${item.code}" type="button" aria-label="Favorit ${item.code}">${isFavorite(item.code) ? '★' : '☆'}</button>
+          <button class="fav-btn ${isFavorite(item.code) ? 'active' : ''}" data-favorite="${item.code}" type="button" aria-label="Favorit ${item.code}">
+            ${isFavorite(item.code) ? '★' : '☆'}
+          </button>
           <span class="algo-code">${item.code}</span>
           <span class="algo-name">${item.title}</span>
-          
         </article>
       `).join('');
+
       document.querySelectorAll('.algo-card').forEach(card => {
         card.addEventListener('click', event => {
           if (event.target.closest('.fav-btn')) return;
           openAlgorithm(card.dataset.code);
         });
       });
+
       document.querySelectorAll('.fav-btn').forEach(button => {
         button.addEventListener('click', event => {
           event.stopPropagation();
@@ -526,24 +564,26 @@
 
     function renderMedicationList(filter = '') {
       const term = filter.trim().toLowerCase();
-      const meds = Object.values(medications).filter(item => item.code.toLowerCase().includes(term) || item.title.toLowerCase().includes(term));
+      const meds = Object.values(medications).filter(item =>
+        item.code.toLowerCase().includes(term) || item.title.toLowerCase().includes(term)
+      );
+
       medicationListGrid.innerHTML = meds.map(item => `
         <button class="med-card-btn" data-medlist="${item.code}" type="button">
           <span class="med-code">${item.code}</span>
           <span class="med-name">${item.title}</span>
-          
         </button>
       `).join('');
+
       document.querySelectorAll('[data-medlist]').forEach(button => {
-        button.addEventListener('click', () => openMedication(button.dataset.medlist, true));
+        button.addEventListener('click', () => openMedication(button.dataset.medlist));
       });
     }
 
     function openAlgorithm(code) {
-      // PDF wird direkt in der großen Ansicht geladen
       const algorithm = algorithms.find(item => item.code === code);
       if (!algorithm) return;
-      currentOpenType = 'algorithm';
+
       homeAlgorithmsView.classList.add('hidden');
       homeMedicationsView.classList.add('hidden');
       detailView.classList.remove('hidden');
@@ -555,14 +595,8 @@
       detailTitle.textContent = algorithm.title;
       detailDescription.textContent = algorithm.description;
       detailTags.innerHTML = algorithm.tags.map(tag => `<span class="chip">${tag}</span>`).join('');
-      detailPdfLink.href = algorithm.pdf;
-      detailPdfDownload.href = algorithm.pdf;
-      cacheFile(algorithm.pdf);
-      try { window.open(algorithm.pdf, '_blank'); } catch {}
 
-      detailInfoCard.classList.remove('hidden');
-      detailMedsSection.classList.remove('hidden');
-      detailRelatedSection.classList.remove('hidden');
+      openPdfNowButton.onclick = () => openPdfDirect(algorithm.pdf);
 
       if (!algorithm.meds.length) {
         medGrid.innerHTML = '<div class="empty-box">Für diesen Eintrag ist aktuell keine Medikamenten-Schnellauswahl hinterlegt.</div>';
@@ -574,12 +608,12 @@
             <button class="med-card-btn" data-med="${med.code}" type="button">
               <span class="med-code">${med.code}</span>
               <span class="med-name">${med.title}</span>
-              
             </button>
           `;
         }).join('');
+
         document.querySelectorAll('[data-med]').forEach(button => {
-          button.addEventListener('click', () => openMedication(button.dataset.med, false));
+          button.addEventListener('click', () => openMedication(button.dataset.med));
         });
       }
 
@@ -594,23 +628,22 @@
             <button class="med-card-btn" data-related="${item.code}" type="button">
               <span class="med-code">${item.code}</span>
               <span class="med-name">${item.title}</span>
-              
             </button>
           `;
         }).join('');
+
         document.querySelectorAll('[data-related]').forEach(button => {
           button.addEventListener('click', () => openAlgorithm(button.dataset.related));
         });
       }
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      openPdfDirect(algorithm.pdf);
     }
 
-    function openMedication(code, fromMainList = false) {
-      // Medikamenten-PDF wird direkt in der großen Ansicht geladen
+    function openMedication(code) {
       const med = medications[code];
       if (!med) return;
-      currentOpenType = 'medication';
+
       homeAlgorithmsView.classList.add('hidden');
       homeMedicationsView.classList.add('hidden');
       detailView.classList.remove('hidden');
@@ -622,34 +655,25 @@
       detailTitle.textContent = med.title;
       detailDescription.textContent = med.description;
       detailTags.innerHTML = med.meta.map(entry => `<span class="chip">${entry}</span>`).join('');
-      detailPdfLink.href = med.pdf;
-      detailPdfDownload.href = med.pdf;
-      cacheFile(med.pdf);
-      try { window.open(med.pdf, '_blank'); } catch {}
 
-      detailInfoCard.classList.remove('hidden');
       detailMedsSection.classList.add('hidden');
       detailRelatedSection.classList.add('hidden');
-      medGrid.innerHTML = '';
-      relatedGrid.innerHTML = '';
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      openPdfNowButton.onclick = () => openPdfDirect(med.pdf);
+      openPdfDirect(med.pdf);
+    }
+
+    function resetDetailSections() {
+      detailMedsSection.classList.remove('hidden');
+      detailRelatedSection.classList.remove('hidden');
     }
 
     function goHome() {
       detailView.classList.add('hidden');
       backButton.classList.add('hidden');
-      currentOpenType = null;
+      resetDetailSections();
       setMode(currentMode);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    async function cacheFile(url) {
-      if (!('caches' in window)) return;
-      try {
-        const cache = await caches.open('evm-app-v1');
-        await cache.add(url);
-      } catch {}
     }
 
     function applySearch() {
