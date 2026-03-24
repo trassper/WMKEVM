@@ -1,4 +1,4 @@
-const CACHE_NAME = 'evm-app-v1';
+const CACHE_NAME = 'evm-app-v2';
 const APP_SHELL = [
   './',
   './index.html',
