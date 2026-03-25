@@ -81,6 +81,18 @@
     }
     .detail-title { font-size: 1.3rem; font-weight: 800; margin: 0 0 8px; line-height: 1.2; }
     .detail-text { margin: 0; color: var(--muted); line-height: 1.55; }
+    .med-structured-grid {
+      display: grid; gap: 12px; grid-template-columns: 1fr; margin-top: 14px;
+    }
+    .med-info-box {
+      border: 1px solid var(--border); background: color-mix(in srgb, var(--card) 96%, #fafbfc); border-radius: 18px; padding: 14px;
+    }
+    .med-info-title {
+      margin: 0 0 8px; font-size: 0.9rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .med-info-list {
+      margin: 0; padding-left: 18px; color: var(--text); line-height: 1.55;
+    }
     .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
     .chip {
       background: #fff5f5; color: var(--brand); border: 1px solid #f2c8c8; border-radius: 999px; padding: 8px 12px; font-size: 0.88rem; font-weight: 700;
@@ -189,6 +201,9 @@
         <h2 class="detail-title" id="detailTitle"></h2>
         <p class="detail-text" id="detailDescription"></p>
         <div class="chip-row" id="detailTags"></div>
+        <div id="structuredMedicationBox" class="hidden" style="margin-top:14px;">
+          <div class="med-structured-grid" id="structuredMedicationContent"></div>
+        </div>
       </article>
 
       <article class="detail-card" id="detailMedsSection">
@@ -256,7 +271,20 @@
 
     const medications = {
       M1: { code: 'M1', title: 'Acetylsalicylsäure', description: 'ASS im EVM-Kontext.', meta: ['ACS', 'ASS'], pdf: 'pdfs/medikamente/M1.pdf' },
-      M2: { code: 'M2', title: 'Adrenalin', description: 'Notfallmedikament.', meta: ['Notfall'], pdf: 'pdfs/medikamente/M2.pdf' },
+      M2: {
+        code: 'M2',
+        title: 'Adrenalin',
+        description: 'Notfallmedikament.',
+        meta: ['Notfall'],
+        pdf: 'pdfs/medikamente/M2.pdf',
+        structured: true,
+        indication: ['Reanimation', 'Anaphylaxie', 'Obere Atemwegsobstruktion je nach Standard'],
+        contraindication: ['Im vitalen Notfall keine absolute Kontraindikation', 'Anwendung immer nach lokalem Standard und Freigabe'],
+        dosage: ['Reanimation: nach gültigem Algorithmus / Standard', 'Anaphylaxie: nach lokalem Dosierschema', 'Kinder: alters- und gewichtsadaptiert'],
+        effect: ['Vasokonstriktion', 'Bronchodilatation', 'Steigerung von Herzfrequenz und Kontraktilität'],
+        sideEffects: ['Tachykardie', 'Rhythmusstörungen', 'Hypertonie', 'Unruhe / Tremor'],
+        notes: ['Nur als App-Vorlage dargestellt', 'Maßgeblich bleiben offizielle Unterlagen und Freigaben']
+      },
       M3: { code: 'M3', title: 'Amiodaron', description: 'Rhythmustherapie.', meta: ['Reanimation'], pdf: 'pdfs/medikamente/M3.pdf' },
       M4: { code: 'M4', title: 'Atropin', description: 'Bradykardie.', meta: ['Bradykardie'], pdf: 'pdfs/medikamente/M4.pdf' },
       M5: { code: 'M5', title: 'Butylscopolamin', description: 'Abdomen.', meta: ['Spasmolyse'], pdf: 'pdfs/medikamente/M5.pdf' },
@@ -295,6 +323,8 @@
     const detailTitle = document.getElementById('detailTitle');
     const detailDescription = document.getElementById('detailDescription');
     const detailTags = document.getElementById('detailTags');
+    const structuredMedicationBox = document.getElementById('structuredMedicationBox');
+    const structuredMedicationContent = document.getElementById('structuredMedicationContent');
     const medGrid = document.getElementById('medGrid');
     const relatedGrid = document.getElementById('relatedGrid');
     const detailMedsSection = document.getElementById('detailMedsSection');
@@ -522,6 +552,29 @@
       detailTags.innerHTML = med.meta.map(entry => `<span class="chip">${entry}</span>`).join('');
       detailMedsSection.classList.add('hidden');
       detailRelatedSection.classList.add('hidden');
+
+      if (med.structured) {
+        structuredMedicationBox.classList.remove('hidden');
+        const sections = [
+          ['Indikation', med.indication],
+          ['Kontraindikation', med.contraindication],
+          ['Dosierung', med.dosage],
+          ['Wirkung', med.effect],
+          ['Nebenwirkungen', med.sideEffects],
+          ['Hinweise', med.notes]
+        ].filter(([, items]) => Array.isArray(items) && items.length);
+
+        structuredMedicationContent.innerHTML = sections.map(([title, items]) => `
+          <section class="med-info-box">
+            <h3 class="med-info-title">${title}</h3>
+            <ul class="med-info-list">${items.map(item => `<li>${item}</li>`).join('')}</ul>
+          </section>
+        `).join('');
+      } else {
+        structuredMedicationBox.classList.add('hidden');
+        structuredMedicationContent.innerHTML = '';
+      }
+
       openPdfExternalButton.onclick = () => openPdfExternal(med.pdf);
       await loadPdfInApp(med.pdf);
     }
@@ -529,6 +582,8 @@
     function resetDetailSections() {
       detailMedsSection.classList.remove('hidden');
       detailRelatedSection.classList.remove('hidden');
+      structuredMedicationBox.classList.add('hidden');
+      structuredMedicationContent.innerHTML = '';
       pdfDoc = null;
       const context = pdfCanvas.getContext('2d');
       context.clearRect(0, 0, pdfCanvas.width || 1, pdfCanvas.height || 1);
