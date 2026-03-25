@@ -89,6 +89,21 @@
     .empty-box { color: var(--muted); background: color-mix(in srgb, var(--card) 96%, #fafbfc); border: 1px dashed var(--border); border-radius: 18px; padding: 14px; line-height: 1.5; }
     .hidden { display: none !important; }
     .footer { text-align: center; color: var(--muted); font-size: 0.84rem; padding: 10px 0 14px; }
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px;
+    }
+    .modal-card {
+      width: 100%; max-width: 520px; background: var(--card); color: var(--text); border-radius: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); padding: 24px;
+    }
+    .modal-title { margin: 0 0 10px; font-size: 1.35rem; font-weight: 800; }
+    .modal-text { margin: 0 0 16px; color: var(--muted); line-height: 1.6; }
+    .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .primary-btn {
+      appearance: none; border: none; border-radius: 16px; min-height: 46px; padding: 0 18px; cursor: pointer; font-weight: 800; background: var(--brand); color: white;
+    }
+    .secondary-btn {
+      appearance: none; border: 1px solid var(--border); border-radius: 16px; min-height: 46px; padding: 0 18px; cursor: pointer; font-weight: 700; background: var(--soft); color: var(--text);
+    }
     @media (max-width: 700px) {
       .button-grid, .med-grid, .related-grid { grid-template-columns: 1fr; }
       .detail-toolbar { flex-direction: column; align-items: stretch; }
@@ -97,6 +112,23 @@
   </style>
 </head>
 <body>
+  <div id="disclaimerModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h2 class="modal-title">Wichtiger Hinweis</h2>
+      <p class="modal-text">
+        Diese App ist <strong>kein offizielles Nachschlagewerk</strong> und <strong>kein freigegebenes medizinisches Dokument</strong>.
+        Sie dient ausschließlich als unterstützende Schnellübersicht.
+        Maßgeblich sind immer die aktuell gültigen offiziellen Unterlagen, Standards, SOPs und ärztlichen Anweisungen.
+      </p>
+      <p class="modal-text">
+        Die Nutzung erfolgt <strong>auf eigene Verantwortung</strong>. Eine Haftung für Inhalte, Vollständigkeit, Aktualität oder daraus entstehende Maßnahmen ist ausgeschlossen.
+      </p>
+      <div class="modal-actions">
+        <button id="declineDisclaimer" class="secondary-btn" type="button">Schließen</button>
+        <button id="acceptDisclaimer" class="primary-btn" type="button">Verstanden</button>
+      </div>
+    </div>
+  </div>
   <div class="app">
     <header class="header">
       <div class="topbar">
@@ -170,7 +202,7 @@
       </article>
     </section>
 
-    <p class="footer">PDF.js Version · Home-Bildschirm-sicher mit echtem Zurück</p>
+    <p class="footer">PDF.js Version · Home-Bildschirm-sicher mit echtem Zurück<br><span style="font-size:0.7rem; opacity:0.8;">Haftung ausgeschlossen · Kein offizielles Nachschlagewerk · Nur zur Unterstützung im Einsatz</span></p>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
@@ -180,6 +212,7 @@
 
     const FAVORITES_KEY = 'evm-favorites-v1';
     const THEME_KEY = 'evm-theme-v1';
+    const DISCLAIMER_KEY = 'evm-disclaimer-accepted-v1';
     let currentMode = 'algorithms';
     let currentOpenPdf = '';
     let pdfDoc = null;
@@ -200,7 +233,9 @@
       { code: 'K9', title: 'Anaphylaxie', description: 'Allergische Reaktion.', tags: ['Allergie'], pdf: 'pdfs/algorithmen/K9.pdf', meds: ['M6', 'M22', 'M2'], related: ['K5', 'K6', 'K7'] },
       { code: 'K10', title: 'Status Epilepticus', description: 'Krampfanfall.', tags: ['Neurologie'], pdf: 'pdfs/algorithmen/K10.pdf', meds: ['M16', 'M15'], related: [] },
       { code: 'K11', title: 'Schlaganfall', description: 'Stroke Algorithmus.', tags: ['FAST'], pdf: 'pdfs/algorithmen/K11.pdf', meds: [], related: [] },
-      { code: 'K13', title: 'Einsetzende Geburt', description: 'Geburt.', tags: ['Geburt'], pdf: 'pdfs/algorithmen/K13.pdf', meds: [], related: ['APGAR'] },
+      { code: 'K12', title: 'Geburt / Neugeborenes', description: 'Geburt mit Folgepfaden Neugeborenes und APGAR.', tags: ['Geburt'], pdf: 'pdfs/algorithmen/K12.pdf', meds: [], related: ['K13', 'K14', 'APGAR'] },
+      { code: 'K13', title: 'Einsetzende Geburt', description: 'Geburt.', tags: ['Geburt'], pdf: 'pdfs/algorithmen/K13.pdf', meds: [], related: ['K14', 'APGAR'] },
+      { code: 'K14', title: 'Neugeborenes', description: 'Erstversorgung.', tags: ['APGAR'], pdf: 'pdfs/algorithmen/K14.pdf', meds: [], related: ['APGAR'] },
       { code: 'K15', title: 'Post Reanimation', description: 'Nach ROSC.', tags: ['ROSC'], pdf: 'pdfs/algorithmen/K15.pdf', meds: [], related: ['REA'] },
       { code: 'K16', title: 'Schmerz Übersicht', description: 'Schmerzübersicht mit Unteralgorithmen.', tags: ['Analgesie'], pdf: 'pdfs/algorithmen/K16.pdf', meds: [], related: ['K16a', 'K16b', 'K16c', 'K16d'] },
       { code: 'K16a', title: 'Abdomen Schmerz', description: 'Abdomineller Schmerz.', tags: ['Abdomen'], pdf: 'pdfs/algorithmen/K16a.pdf', meds: ['M5', 'M18', 'M20'], related: ['K16'] },
@@ -271,6 +306,9 @@
     const pdfNextButton = document.getElementById('pdfNextButton');
     const pdfPageInfo = document.getElementById('pdfPageInfo');
     const pdfFitButton = document.getElementById('pdfFitButton');
+    const disclaimerModal = document.getElementById('disclaimerModal');
+    const acceptDisclaimer = document.getElementById('acceptDisclaimer');
+    const declineDisclaimer = document.getElementById('declineDisclaimer');
 
     function applyTheme(theme) {
       const dark = theme === 'dark';
@@ -559,7 +597,22 @@
       preloadAllPdfs();
     }
 
+    function showDisclaimerIfNeeded() {
+      const accepted = localStorage.getItem(DISCLAIMER_KEY) === 'yes';
+      if (!accepted) disclaimerModal.classList.remove('hidden');
+    }
+
+    acceptDisclaimer.addEventListener('click', () => {
+      localStorage.setItem(DISCLAIMER_KEY, 'yes');
+      disclaimerModal.classList.add('hidden');
+    });
+
+    declineDisclaimer.addEventListener('click', () => {
+      window.location.href = 'about:blank';
+    });
+
     applyTheme(localStorage.getItem(THEME_KEY) || 'light');
+    showDisclaimerIfNeeded();
     renderFavoritesBar();
     setMode('algorithms');
   </script>
