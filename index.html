@@ -90,18 +90,37 @@
     .med-info-box.indication {
       background: #eef9f0;
       border-color: #cfe8d4;
+      color: #1f2937;
+    }
+    body.dark .med-info-box.indication {
+      background: #1f3a2a;
+      border-color: #2f5d3f;
+      color: #e6f4ea;
     }
     .med-info-box.contra {
       background: #fff1f1;
       border-color: #f2c8c8;
+      color: #1f2937;
+    }
+    body.dark .med-info-box.contra {
+      background: #3a1f1f;
+      border-color: #5d2f2f;
+      color: #fde8e8;
     }
     .med-info-box.neutral {
       background: var(--card);
       border-color: var(--border);
+      color: var(--text);
     }
     .med-info-box.sideeffects {
       background: #fff7f7;
       border-color: #f4d7d7;
+      color: #1f2937;
+    }
+    body.dark .med-info-box.sideeffects {
+      background: #332424;
+      border-color: #5a3a3a;
+      color: #fbeaea;
     }
     .med-info-title {
       margin: 0 0 8px; font-size: 0.9rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em;
@@ -294,9 +313,9 @@
         meta: ['Notfall'],
         pdf: 'pdfs/medikamente/M2.pdf',
         structured: true,
-        indication: ['Reanimation', 'Anaphylaxie', 'Obere Atemwegsobstruktion je nach Standard'],
-        contraindication: ['Im vitalen Notfall keine absolute Kontraindikation', 'Anwendung immer nach lokalem Standard und Freigabe'],
-        dosage: ['Reanimation: nach gültigem Algorithmus / Standard', 'Anaphylaxie: nach lokalem Dosierschema', 'Kinder: alters- und gewichtsadaptiert'],
+        indication: ['Reanimation', 'Anaphylaxie', 'Obere Atemwegsobstruktion' , 'Bedrohliche Bradykardie'],
+        contraindication: ['Im vitalen Notfall keine absolute Kontraindikation', 'Allergie gegen den Wirkstoff'],
+        dosage: ['Reanimation Erw./Jugendl.: 1 mg i.v./i.o.','Reanimation Kind: 0,01 mg/kgKG i.v./i.o', 'Anaphylaxie:  bis 30 kgKG: 0,01 mg/kg i.m, 30–60 kgKG: 0,1 mg/10 kgKG i.m., 60 kgKG: 0,6 mg i.m', 'Bradykardie:  Überbrückende Maßnahme: 1mg + 99ml NaCl 0,9% (1:100), dann 0,01mg (1ml) i.v., Adrenalin-Spritzenpumpe: 5 mg/50 ml (+ 45 ml NaCl 0,9 %), Start: 1,2 ml/h = 2 µg/min, Laufgeschwindigkeit anpassen zwischen 1,2 – 7,2 ml/h = 2 – 12 µg/min'],
         effect: ['Vasokonstriktion', 'Bronchodilatation', 'Steigerung von Herzfrequenz und Kontraktilität'],
         sideEffects: ['Tachykardie', 'Rhythmusstörungen', 'Hypertonie', 'Unruhe / Tremor'],
         notes: ['Nur als App-Vorlage dargestellt', 'Maßgeblich bleiben offizielle Unterlagen und Freigaben']
@@ -357,6 +376,7 @@
     const declineDisclaimer = document.getElementById('declineDisclaimer');
 
     function applyTheme(theme) {
+      document.body.classList.toggle('dark', theme === 'dark');
       const dark = theme === 'dark';
       document.documentElement.style.setProperty('--bg', dark ? '#111827' : '#f4f6fa');
       document.documentElement.style.setProperty('--card', dark ? '#1f2937' : '#ffffff');
@@ -687,3 +707,4 @@
   </script>
 </body>
 </html>
+
