@@ -87,6 +87,22 @@
     .med-info-box {
       border: 1px solid var(--border); background: color-mix(in srgb, var(--card) 96%, #fafbfc); border-radius: 18px; padding: 14px;
     }
+    .med-info-box.indication {
+      background: #eef9f0;
+      border-color: #cfe8d4;
+    }
+    .med-info-box.contra {
+      background: #fff1f1;
+      border-color: #f2c8c8;
+    }
+    .med-info-box.neutral {
+      background: var(--card);
+      border-color: var(--border);
+    }
+    .med-info-box.sideeffects {
+      background: #fff7f7;
+      border-color: #f4d7d7;
+    }
     .med-info-title {
       margin: 0 0 8px; font-size: 0.9rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em;
     }
@@ -175,6 +191,15 @@
     </section>
 
     <section id="detailView" class="hidden">
+      <article class="detail-card">
+        <h2 class="detail-title" id="detailTitle"></h2>
+        <p class="detail-text" id="detailDescription"></p>
+        <div class="chip-row" id="detailTags"></div>
+        <div id="structuredMedicationBox" class="hidden" style="margin-top:14px;">
+          <div class="med-structured-grid" id="structuredMedicationContent"></div>
+        </div>
+      </article>
+
       <article class="pdf-card">
         <div class="detail-toolbar">
           <div class="detail-toolbar-left">
@@ -194,15 +219,6 @@
           <div id="pdfViewer" class="pdf-viewer">
             <canvas id="pdfCanvas" class="pdf-canvas"></canvas>
           </div>
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2 class="detail-title" id="detailTitle"></h2>
-        <p class="detail-text" id="detailDescription"></p>
-        <div class="chip-row" id="detailTags"></div>
-        <div id="structuredMedicationBox" class="hidden" style="margin-top:14px;">
-          <div class="med-structured-grid" id="structuredMedicationContent"></div>
         </div>
       </article>
 
@@ -556,16 +572,14 @@
       if (med.structured) {
         structuredMedicationBox.classList.remove('hidden');
         const sections = [
-          ['Indikation', med.indication],
-          ['Kontraindikation', med.contraindication],
-          ['Dosierung', med.dosage],
-          ['Wirkung', med.effect],
-          ['Nebenwirkungen', med.sideEffects],
-          ['Hinweise', med.notes]
+          ['Indikation', med.indication, 'indication'],
+          ['Kontraindikation', med.contraindication, 'contra'],
+          ['Nebenwirkungen', med.sideEffects, 'sideeffects'],
+          ['Dosierung / Aufziehanleitung', med.dosage, 'neutral']
         ].filter(([, items]) => Array.isArray(items) && items.length);
 
-        structuredMedicationContent.innerHTML = sections.map(([title, items]) => `
-          <section class="med-info-box">
+        structuredMedicationContent.innerHTML = sections.map(([title, items, boxClass]) => `
+          <section class="med-info-box ${boxClass}">
             <h3 class="med-info-title">${title}</h3>
             <ul class="med-info-list">${items.map(item => `<li>${item}</li>`).join('')}</ul>
           </section>
