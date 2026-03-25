@@ -21,293 +21,65 @@
       --shadow: 0 10px 30px rgba(0,0,0,0.08);
       --radius: 22px;
     }
-
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
+      transition: background 0.2s ease, color 0.2s ease;
     }
-
-    .app {
-      max-width: 920px;
-      margin: 0 auto;
-      min-height: 100vh;
-      padding: env(safe-area-inset-top) 16px calc(env(safe-area-inset-bottom) + 24px);
+    .app { max-width: 920px; margin: 0 auto; min-height: 100vh; padding: env(safe-area-inset-top) 16px calc(env(safe-area-inset-bottom) + 24px); }
+    .header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 96%, transparent); backdrop-filter: blur(12px); padding: 14px 0 12px; }
+    .topbar { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .back-btn, .quick-btn, .fav-btn, .algo-card, .med-card-btn, .tab-btn, .nav-btn { font: inherit; }
+    .back-btn, .nav-btn {
+      appearance: none; border: none; background: var(--soft); color: var(--text); border-radius: 14px; min-height: 44px; padding: 0 14px; font-weight: 700; cursor: pointer;
     }
-
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: rgba(244,246,250,0.96);
-      backdrop-filter: blur(12px);
-      padding: 14px 0 12px;
+    .title { font-size: 1.7rem; font-weight: 800; margin: 0; line-height: 1.1; }
+    .mini-label, .section-title {
+      color: var(--muted); font-size: 0.86rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; margin: 18px 0 10px;
     }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .back-btn,
-    .quick-btn,
-    .fav-btn,
-    .algo-card,
-    .med-card-btn,
-    .tab-btn,
-    .nav-btn {
-      font: inherit;
-    }
-
-    .back-btn,
-    .nav-btn {
-      appearance: none;
-      border: none;
-      background: var(--soft);
-      color: var(--text);
-      border-radius: 14px;
-      min-height: 44px;
-      padding: 0 14px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .title {
-      font-size: 1.7rem;
-      font-weight: 800;
-      margin: 0;
-      line-height: 1.1;
-    }
-
-    .mini-label,
-    .section-title {
-      color: var(--muted);
-      font-size: 0.86rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin: 18px 0 10px;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 10px;
-      margin: 8px 0 12px;
-    }
-
+    .tabs { display: flex; gap: 10px; margin: 8px 0 12px; flex-wrap: wrap; }
     .tab-btn {
-      appearance: none;
-      border: none;
-      border-radius: 16px;
-      min-height: 44px;
-      padding: 12px 16px;
-      cursor: pointer;
-      font-weight: 700;
-      background: var(--soft);
-      color: var(--text);
+      appearance: none; border: none; border-radius: 16px; min-height: 44px; padding: 12px 16px; cursor: pointer; font-weight: 700; background: var(--soft); color: var(--text);
     }
-
-    .tab-btn.active {
-      background: var(--brand);
-      color: white;
-    }
-
-    .favorites-row {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 2px;
-    }
-
+    .tab-btn.active { background: var(--brand); color: white; }
+    .favorites-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 2px; }
     .search input {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px 16px;
-      font-size: 1rem;
-      background: #fff;
-      outline: none;
+      width: 100%; border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; font-size: 1rem; background: var(--card); color: var(--text); outline: none;
     }
-
     .quick-btn {
-      appearance: none;
-      border: none;
-      border-radius: 16px;
-      min-height: 44px;
-      padding: 12px 14px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      white-space: nowrap;
-      background: var(--soft);
-      color: var(--text);
+      appearance: none; border: none; border-radius: 16px; min-height: 44px; padding: 12px 14px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; white-space: nowrap; background: var(--soft); color: var(--text);
     }
-
-    .button-grid,
-    .med-grid,
-    .related-grid {
-      display: grid;
-      gap: 12px;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .button-grid, .med-grid, .related-grid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .algo-card, .med-card-btn {
+      appearance: none; width: 100%; border: 1px solid var(--border); border-radius: 20px; background: var(--card); text-align: left; cursor: pointer; box-shadow: var(--shadow); padding: 16px; position: relative; min-height: 92px; color: var(--text);
     }
-
-    .algo-card,
-    .med-card-btn {
-      appearance: none;
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: var(--card);
-      text-align: left;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      padding: 16px;
-      position: relative;
-      min-height: 92px;
-    }
-
     .fav-btn {
-      appearance: none;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: #fff;
-      width: 38px;
-      height: 38px;
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-      font-size: 1rem;
-      line-height: 1;
+      appearance: none; border: 1px solid var(--border); border-radius: 999px; background: var(--card); width: 38px; height: 38px; position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 1rem; line-height: 1; color: var(--text);
     }
-
-    .fav-btn.active {
-      background: #fff5f5;
-      color: var(--brand);
-      border-color: #f2c8c8;
-    }
-
-    .algo-code,
-    .med-code {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: var(--brand);
-      letter-spacing: 0.04em;
-      margin-bottom: 8px;
-    }
-
-    .algo-name,
-    .med-name {
-      display: block;
-      font-size: 1rem;
-      font-weight: 800;
-      line-height: 1.3;
-      color: var(--text);
-      padding-right: 40px;
-    }
-
+    .fav-btn.active { background: #fff5f5; color: var(--brand); border-color: #f2c8c8; }
+    .algo-code, .med-code { display: inline-block; font-size: 0.8rem; font-weight: 800; color: var(--brand); letter-spacing: 0.04em; margin-bottom: 8px; }
+    .algo-name, .med-name { display: block; font-size: 1rem; font-weight: 800; line-height: 1.3; color: var(--text); padding-right: 40px; }
     .detail-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: var(--shadow);
-      margin-bottom: 14px;
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); margin-bottom: 14px;
     }
-
-    .detail-toolbar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .detail-toolbar-left,
-    .detail-toolbar-right {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .detail-title {
-      font-size: 1.3rem;
-      font-weight: 800;
-      margin: 0 0 8px;
-      line-height: 1.2;
-    }
-
-    .detail-text {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
+    .detail-toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .detail-toolbar-left, .detail-toolbar-right { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .detail-title { font-size: 1.3rem; font-weight: 800; margin: 0 0 8px; line-height: 1.2; }
+    .detail-text { margin: 0; color: var(--muted); line-height: 1.55; }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
     .chip {
-      background: #fff5f5;
-      color: var(--brand);
-      border: 1px solid #f2c8c8;
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 0.88rem;
-      font-weight: 700;
+      background: #fff5f5; color: var(--brand); border: 1px solid #f2c8c8; border-radius: 999px; padding: 8px 12px; font-size: 0.88rem; font-weight: 700;
     }
-
-    .stack-title {
-      margin: 0 0 10px;
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .empty-box {
-      color: var(--muted);
-      background: #fafbfc;
-      border: 1px dashed var(--border);
-      border-radius: 18px;
-      padding: 14px;
-      line-height: 1.5;
-    }
-
+    .stack-title { margin: 0 0 10px; font-size: 1rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    .empty-box { color: var(--muted); background: color-mix(in srgb, var(--card) 96%, #fafbfc); border: 1px dashed var(--border); border-radius: 18px; padding: 14px; line-height: 1.5; }
     .hidden { display: none !important; }
-
-    .footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.84rem;
-      padding: 10px 0 14px;
-    }
-
+    .footer { text-align: center; color: var(--muted); font-size: 0.84rem; padding: 10px 0 14px; }
     @media (max-width: 700px) {
-      .button-grid,
-      .med-grid,
-      .related-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .detail-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-      }
+      .button-grid, .med-grid, .related-grid { grid-template-columns: 1fr; }
+      .detail-toolbar { flex-direction: column; align-items: stretch; }
     }
   </style>
 </head>
@@ -316,14 +88,13 @@
     <header class="header">
       <div class="topbar">
         <button id="backButton" class="back-btn hidden" type="button">← Zurück</button>
-        <div>
-          <h1 class="title">Algorithmen</h1>
-        </div>
+        <div><h1 class="title">Algorithmen</h1></div>
       </div>
 
       <div class="tabs">
         <button id="tabAlgorithms" class="tab-btn active" type="button">Algorithmen</button>
         <button id="tabMedications" class="tab-btn" type="button">Medikamente</button>
+        <button id="themeToggle" class="tab-btn" type="button">Dark Mode</button>
       </div>
 
       <div id="favoritesSection" class="hidden">
@@ -358,7 +129,6 @@
             <button id="openPdfNowButton" class="nav-btn" type="button">PDF jetzt öffnen</button>
           </div>
         </div>
-
         <h2 class="detail-title" id="detailTitle"></h2>
         <p class="detail-text" id="detailDescription"></p>
         <div class="chip-row" id="detailTags"></div>
@@ -380,6 +150,7 @@
 
   <script>
     const FAVORITES_KEY = 'evm-favorites-v1';
+    const THEME_KEY = 'evm-theme-v1';
     let currentMode = 'algorithms';
     let currentOpenPdf = '';
 
@@ -448,6 +219,7 @@
     const inlineBackButton = document.getElementById('inlineBackButton');
     const tabAlgorithms = document.getElementById('tabAlgorithms');
     const tabMedications = document.getElementById('tabMedications');
+    const themeToggle = document.getElementById('themeToggle');
     const favoritesSection = document.getElementById('favoritesSection');
     const favoritesBar = document.getElementById('favoritesBar');
     const detailCode = document.getElementById('detailCode');
@@ -461,9 +233,21 @@
     const detailRelatedSection = document.getElementById('detailRelatedSection');
     const openPdfNowButton = document.getElementById('openPdfNowButton');
 
+    function applyTheme(theme) {
+      const dark = theme === 'dark';
+      document.documentElement.style.setProperty('--bg', dark ? '#111827' : '#f4f6fa');
+      document.documentElement.style.setProperty('--card', dark ? '#1f2937' : '#ffffff');
+      document.documentElement.style.setProperty('--text', dark ? '#f9fafb' : '#1f2937');
+      document.documentElement.style.setProperty('--muted', dark ? '#9ca3af' : '#6b7280');
+      document.documentElement.style.setProperty('--soft', dark ? '#374151' : '#eef2f7');
+      document.documentElement.style.setProperty('--border', dark ? '#374151' : '#e5e7eb');
+      themeToggle.textContent = dark ? 'Light Mode' : 'Dark Mode';
+      localStorage.setItem(THEME_KEY, theme);
+    }
+
     function openPdfDirect(url) {
       currentOpenPdf = url;
-      window.location.href = url;
+      window.open(url, '_blank');
     }
 
     function getFavorites() {
@@ -486,9 +270,7 @@
 
     function toggleFavorite(code) {
       const favorites = getFavorites();
-      const next = favorites.includes(code)
-        ? favorites.filter(item => item !== code)
-        : [...favorites, code];
+      const next = favorites.includes(code) ? favorites.filter(item => item !== code) : [...favorites, code];
       setFavorites(next);
       renderFavoritesBar();
       renderAlgorithms(searchInput.value);
@@ -500,21 +282,18 @@
         favoritesBar.innerHTML = '';
         return;
       }
-
       const favorites = getFavorites();
       if (!favorites.length) {
         favoritesSection.classList.add('hidden');
         favoritesBar.innerHTML = '';
         return;
       }
-
       favoritesSection.classList.remove('hidden');
       favoritesBar.innerHTML = favorites.map(code => {
         const item = algorithms.find(entry => entry.code === code);
         if (!item) return '';
         return `<button class="quick-btn" type="button" data-favorite-open="${item.code}">${item.code}</button>`;
       }).join('');
-
       document.querySelectorAll('[data-favorite-open]').forEach(button => {
         button.addEventListener('click', () => openAlgorithm(button.dataset.favoriteOpen));
       });
@@ -533,27 +312,20 @@
 
     function renderAlgorithms(filter = '') {
       const term = filter.trim().toLowerCase();
-      const filtered = algorithms.filter(item =>
-        item.code.toLowerCase().includes(term) || item.title.toLowerCase().includes(term)
-      );
-
+      const filtered = algorithms.filter(item => item.code.toLowerCase().includes(term) || item.title.toLowerCase().includes(term));
       algorithmGrid.innerHTML = filtered.map(item => `
         <article class="algo-card" data-code="${item.code}" tabindex="0" role="button" aria-label="${item.code} ${item.title}">
-          <button class="fav-btn ${isFavorite(item.code) ? 'active' : ''}" data-favorite="${item.code}" type="button" aria-label="Favorit ${item.code}">
-            ${isFavorite(item.code) ? '★' : '☆'}
-          </button>
+          <button class="fav-btn ${isFavorite(item.code) ? 'active' : ''}" data-favorite="${item.code}" type="button" aria-label="Favorit ${item.code}">${isFavorite(item.code) ? '★' : '☆'}</button>
           <span class="algo-code">${item.code}</span>
           <span class="algo-name">${item.title}</span>
         </article>
       `).join('');
-
       document.querySelectorAll('.algo-card').forEach(card => {
         card.addEventListener('click', event => {
           if (event.target.closest('.fav-btn')) return;
           openAlgorithm(card.dataset.code);
         });
       });
-
       document.querySelectorAll('.fav-btn').forEach(button => {
         button.addEventListener('click', event => {
           event.stopPropagation();
@@ -564,17 +336,13 @@
 
     function renderMedicationList(filter = '') {
       const term = filter.trim().toLowerCase();
-      const meds = Object.values(medications).filter(item =>
-        item.code.toLowerCase().includes(term) || item.title.toLowerCase().includes(term)
-      );
-
+      const meds = Object.values(medications).filter(item => item.code.toLowerCase().includes(term) || item.title.toLowerCase().includes(term));
       medicationListGrid.innerHTML = meds.map(item => `
         <button class="med-card-btn" data-medlist="${item.code}" type="button">
           <span class="med-code">${item.code}</span>
           <span class="med-name">${item.title}</span>
         </button>
       `).join('');
-
       document.querySelectorAll('[data-medlist]').forEach(button => {
         button.addEventListener('click', () => openMedication(button.dataset.medlist));
       });
@@ -583,20 +351,19 @@
     function openAlgorithm(code) {
       const algorithm = algorithms.find(item => item.code === code);
       if (!algorithm) return;
-
       homeAlgorithmsView.classList.add('hidden');
       homeMedicationsView.classList.add('hidden');
       detailView.classList.remove('hidden');
       backButton.classList.remove('hidden');
       favoritesSection.classList.add('hidden');
-
       detailCode.textContent = algorithm.code;
       detailToolbarTitle.textContent = algorithm.title;
       detailTitle.textContent = algorithm.title;
       detailDescription.textContent = algorithm.description;
       detailTags.innerHTML = algorithm.tags.map(tag => `<span class="chip">${tag}</span>`).join('');
-
       openPdfNowButton.onclick = () => openPdfDirect(algorithm.pdf);
+      detailMedsSection.classList.remove('hidden');
+      detailRelatedSection.classList.remove('hidden');
 
       if (!algorithm.meds.length) {
         medGrid.innerHTML = '<div class="empty-box">Für diesen Eintrag ist aktuell keine Medikamenten-Schnellauswahl hinterlegt.</div>';
@@ -604,14 +371,8 @@
         medGrid.innerHTML = algorithm.meds.map(code => {
           const med = medications[code];
           if (!med) return '';
-          return `
-            <button class="med-card-btn" data-med="${med.code}" type="button">
-              <span class="med-code">${med.code}</span>
-              <span class="med-name">${med.title}</span>
-            </button>
-          `;
+          return `<button class="med-card-btn" data-med="${med.code}" type="button"><span class="med-code">${med.code}</span><span class="med-name">${med.title}</span></button>`;
         }).join('');
-
         document.querySelectorAll('[data-med]').forEach(button => {
           button.addEventListener('click', () => openMedication(button.dataset.med));
         });
@@ -624,14 +385,8 @@
         relatedGrid.innerHTML = related.map(code => {
           const item = algorithms.find(entry => entry.code === code);
           if (!item) return '';
-          return `
-            <button class="med-card-btn" data-related="${item.code}" type="button">
-              <span class="med-code">${item.code}</span>
-              <span class="med-name">${item.title}</span>
-            </button>
-          `;
+          return `<button class="med-card-btn" data-related="${item.code}" type="button"><span class="med-code">${item.code}</span><span class="med-name">${item.title}</span></button>`;
         }).join('');
-
         document.querySelectorAll('[data-related]').forEach(button => {
           button.addEventListener('click', () => openAlgorithm(button.dataset.related));
         });
@@ -643,22 +398,18 @@
     function openMedication(code) {
       const med = medications[code];
       if (!med) return;
-
       homeAlgorithmsView.classList.add('hidden');
       homeMedicationsView.classList.add('hidden');
       detailView.classList.remove('hidden');
       backButton.classList.remove('hidden');
       favoritesSection.classList.add('hidden');
-
       detailCode.textContent = med.code;
       detailToolbarTitle.textContent = med.title;
       detailTitle.textContent = med.title;
       detailDescription.textContent = med.description;
       detailTags.innerHTML = med.meta.map(entry => `<span class="chip">${entry}</span>`).join('');
-
       detailMedsSection.classList.add('hidden');
       detailRelatedSection.classList.add('hidden');
-
       openPdfNowButton.onclick = () => openPdfDirect(med.pdf);
       openPdfDirect(med.pdf);
     }
@@ -676,13 +427,19 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    async function preloadAllPdfs() {
+      if (!('caches' in window)) return;
+      const urls = [...algorithms.map(a => a.pdf), ...Object.values(medications).map(m => m.pdf)];
+      try {
+        const cache = await caches.open('evm-app-v1');
+        await Promise.all(urls.map(url => cache.add(url).catch(() => null)));
+      } catch {}
+    }
+
     function applySearch() {
       const value = searchInput.value || '';
-      if (currentMode === 'algorithms') {
-        renderAlgorithms(value);
-      } else {
-        renderMedicationList(value);
-      }
+      if (currentMode === 'algorithms') renderAlgorithms(value);
+      else renderMedicationList(value);
     }
 
     searchInput.addEventListener('input', applySearch);
@@ -690,13 +447,21 @@
     inlineBackButton.addEventListener('click', goHome);
     tabAlgorithms.addEventListener('click', () => setMode('algorithms'));
     tabMedications.addEventListener('click', () => setMode('medications'));
+    themeToggle.addEventListener('click', () => {
+      const current = localStorage.getItem(THEME_KEY) || 'light';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
+        preloadAllPdfs();
       });
+    } else {
+      preloadAllPdfs();
     }
 
+    applyTheme(localStorage.getItem(THEME_KEY) || 'light');
     renderFavoritesBar();
     setMode('algorithms');
   </script>
