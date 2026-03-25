@@ -62,11 +62,15 @@
     .fav-btn.active { background: #fff5f5; color: var(--brand); border-color: #f2c8c8; }
     .algo-code, .med-code { display: inline-block; font-size: 0.8rem; font-weight: 800; color: var(--brand); letter-spacing: 0.04em; margin-bottom: 8px; }
     .algo-name, .med-name { display: block; font-size: 1rem; font-weight: 800; line-height: 1.3; color: var(--text); padding-right: 40px; }
-    .detail-card {
+    .detail-card, .pdf-card {
       background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); margin-bottom: 14px;
     }
     .detail-toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .detail-toolbar-left, .detail-toolbar-right { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .pdf-frame-wrap {
+      width: 100%; border-radius: 18px; overflow: hidden; background: color-mix(in srgb, var(--card) 94%, #f8fafc); border: 1px solid var(--border);
+    }
+    .pdf-frame { width: 100%; height: 74vh; border: none; display: block; background: #fff; }
     .detail-title { font-size: 1.3rem; font-weight: 800; margin: 0 0 8px; line-height: 1.2; }
     .detail-text { margin: 0; color: var(--muted); line-height: 1.55; }
     .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
@@ -80,6 +84,7 @@
     @media (max-width: 700px) {
       .button-grid, .med-grid, .related-grid { grid-template-columns: 1fr; }
       .detail-toolbar { flex-direction: column; align-items: stretch; }
+      .pdf-frame { height: 62vh; }
     }
   </style>
 </head>
@@ -118,7 +123,7 @@
     </section>
 
     <section id="detailView" class="hidden">
-      <article class="detail-card">
+      <article class="pdf-card">
         <div class="detail-toolbar">
           <div class="detail-toolbar-left">
             <button id="inlineBackButton" class="nav-btn" type="button">← Zurück</button>
@@ -126,9 +131,15 @@
             <strong id="detailToolbarTitle"></strong>
           </div>
           <div class="detail-toolbar-right">
-            <button id="openPdfNowButton" class="nav-btn" type="button">PDF jetzt öffnen</button>
+            <button id="openPdfExternalButton" class="nav-btn" type="button">PDF extern öffnen</button>
           </div>
         </div>
+        <div class="pdf-frame-wrap">
+          <iframe id="pdfFrame" class="pdf-frame" title="PDF Ansicht"></iframe>
+        </div>
+      </article>
+
+      <article class="detail-card">
         <h2 class="detail-title" id="detailTitle"></h2>
         <p class="detail-text" id="detailDescription"></p>
         <div class="chip-row" id="detailTags"></div>
@@ -145,7 +156,7 @@
       </article>
     </section>
 
-    <p class="footer">Kostenlos nutzbar als HTML-Web-App · ideal für GitHub Pages</p>
+    <p class="footer">Home-Bildschirm-sichere Version · PDFs bleiben in der App mit Zurück-Button</p>
   </div>
 
   <script>
@@ -231,7 +242,8 @@
     const relatedGrid = document.getElementById('relatedGrid');
     const detailMedsSection = document.getElementById('detailMedsSection');
     const detailRelatedSection = document.getElementById('detailRelatedSection');
-    const openPdfNowButton = document.getElementById('openPdfNowButton');
+    const openPdfExternalButton = document.getElementById('openPdfExternalButton');
+    const pdfFrame = document.getElementById('pdfFrame');
 
     function applyTheme(theme) {
       const dark = theme === 'dark';
@@ -245,8 +257,12 @@
       localStorage.setItem(THEME_KEY, theme);
     }
 
-    function openPdfDirect(url) {
+    function loadPdfInApp(url) {
       currentOpenPdf = url;
+      pdfFrame.src = url;
+    }
+
+    function openPdfExternal(url) {
       window.open(url, '_blank');
     }
 
@@ -361,7 +377,7 @@
       detailTitle.textContent = algorithm.title;
       detailDescription.textContent = algorithm.description;
       detailTags.innerHTML = algorithm.tags.map(tag => `<span class="chip">${tag}</span>`).join('');
-      openPdfNowButton.onclick = () => openPdfDirect(algorithm.pdf);
+      openPdfExternalButton.onclick = () => openPdfExternal(algorithm.pdf);
       detailMedsSection.classList.remove('hidden');
       detailRelatedSection.classList.remove('hidden');
 
@@ -392,7 +408,7 @@
         });
       }
 
-      openPdfDirect(algorithm.pdf);
+      loadPdfInApp(algorithm.pdf);
     }
 
     function openMedication(code) {
@@ -410,13 +426,14 @@
       detailTags.innerHTML = med.meta.map(entry => `<span class="chip">${entry}</span>`).join('');
       detailMedsSection.classList.add('hidden');
       detailRelatedSection.classList.add('hidden');
-      openPdfNowButton.onclick = () => openPdfDirect(med.pdf);
-      openPdfDirect(med.pdf);
+      openPdfExternalButton.onclick = () => openPdfExternal(med.pdf);
+      loadPdfInApp(med.pdf);
     }
 
     function resetDetailSections() {
       detailMedsSection.classList.remove('hidden');
       detailRelatedSection.classList.remove('hidden');
+      pdfFrame.src = '';
     }
 
     function goHome() {
