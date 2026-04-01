@@ -84,6 +84,22 @@
     .med-structured-grid {
       display: grid; gap: 12px; grid-template-columns: 1fr; margin-top: 14px;
     }
+    .med-accordion {
+      border: 1px solid var(--border); border-radius: 18px; overflow: hidden; background: var(--card);
+    }
+    .med-accordion.indication { background: #eef9f0; border-color: #cfe8d4; color: #1f2937; }
+    .med-accordion.contra { background: #fff1f1; border-color: #f2c8c8; color: #1f2937; }
+    .med-accordion.sideeffects { background: #fff7f7; border-color: #f4d7d7; color: #1f2937; }
+    .med-accordion.neutral { background: var(--card); border-color: var(--border); color: var(--text); }
+    body.dark .med-accordion.indication { background: #1f3a2a; border-color: #2f5d3f; color: #e6f4ea; }
+    body.dark .med-accordion.contra { background: #3a1f1f; border-color: #5d2f2f; color: #fde8e8; }
+    body.dark .med-accordion.sideeffects { background: #332424; border-color: #5a3a3a; color: #fbeaea; }
+    body.dark .med-accordion.neutral { background: var(--card); border-color: var(--border); color: var(--text); }
+    .med-accordion-btn {
+      width: 100%; appearance: none; border: none; background: transparent; color: inherit; text-align: left; padding: 16px 18px; font-weight: 800; font-size: 0.98rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    }
+    .med-accordion-content { padding: 0 18px 16px; }
+    .med-accordion-content.hidden { display: none; }
     .med-info-box {
       border: 1px solid var(--border); background: color-mix(in srgb, var(--card) 96%, #fafbfc); border-radius: 18px; padding: 14px;
     }
@@ -126,7 +142,7 @@
       margin: 0 0 8px; font-size: 0.9rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em;
     }
     .med-info-list {
-      margin: 0; padding-left: 18px; color: var(--text); line-height: 1.55;
+      margin: 0; padding-left: 18px; color: inherit; line-height: 1.55;
     }
     .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
     .chip {
@@ -305,7 +321,21 @@
     ];
 
     const medications = {
-      M1: { code: 'M1', title: 'Acetylsalicylsäure', description: 'ASS im EVM-Kontext.', meta: ['ACS', 'ASS'], pdf: 'pdfs/medikamente/M1.pdf' },
+      M1: {
+        code: 'M1',
+        title: 'Acetylsalicylsäure',
+        description: 'ASS im EVM-Kontext.',
+        meta: ['ACS', 'ASS'],
+        pdf: 'pdfs/medikamente/M1.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
       M2: {
         code: 'M2',
         title: 'Adrenalin',
@@ -313,31 +343,265 @@
         meta: ['Notfall'],
         pdf: 'pdfs/medikamente/M2.pdf',
         structured: true,
-        indication: ['Reanimation', 'Anaphylaxie', 'Obere Atemwegsobstruktion' , 'Bedrohliche Bradykardie'],
-        contraindication: ['Im vitalen Notfall keine absolute Kontraindikation', 'Allergie gegen den Wirkstoff'],
-        dosage: ['Reanimation Erw./Jugendl.: 1 mg i.v./i.o.','Reanimation Kind: 0,01 mg/kgKG i.v./i.o', 'Anaphylaxie:  bis 30 kgKG: 0,01 mg/kg i.m, 30–60 kgKG: 0,1 mg/10 kgKG i.m., 60 kgKG: 0,6 mg i.m', 'Bradykardie:  Überbrückende Maßnahme: 1mg + 99ml NaCl 0,9% (1:100), dann 0,01mg (1ml) i.v., Adrenalin-Spritzenpumpe: 5 mg/50 ml (+ 45 ml NaCl 0,9 %), Start: 1,2 ml/h = 2 µg/min, Laufgeschwindigkeit anpassen zwischen 1,2 – 7,2 ml/h = 2 – 12 µg/min'],
-        effect: ['Vasokonstriktion', 'Bronchodilatation', 'Steigerung von Herzfrequenz und Kontraktilität'],
-        sideEffects: ['Tachykardie', 'Rhythmusstörungen', 'Hypertonie', 'Unruhe / Tremor'],
-        notes: ['Nur als App-Vorlage dargestellt', 'Maßgeblich bleiben offizielle Unterlagen und Freigaben']
+        indication: ['Reanimation', 'Anaphylaxie', 'Obere Atemwegsobstruktion je nach Standard'],
+        contraindication: ['Im vitalen Notfall keine absolute Kontraindikation', 'Anwendung immer nach lokalem Standard und Freigabe'],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
       },
-      M3: { code: 'M3', title: 'Amiodaron', description: 'Rhythmustherapie.', meta: ['Reanimation'], pdf: 'pdfs/medikamente/M3.pdf' },
-      M4: { code: 'M4', title: 'Atropin', description: 'Bradykardie.', meta: ['Bradykardie'], pdf: 'pdfs/medikamente/M4.pdf' },
-      M5: { code: 'M5', title: 'Butylscopolamin', description: 'Abdomen.', meta: ['Spasmolyse'], pdf: 'pdfs/medikamente/M5.pdf' },
-      M6: { code: 'M6', title: 'Clemastinfumarat', description: 'Allergie.', meta: ['Antihistaminikum'], pdf: 'pdfs/medikamente/M6.pdf' },
-      M7: { code: 'M7', title: 'Dimenhydrinat', description: 'Antiemese.', meta: ['Übelkeit'], pdf: 'pdfs/medikamente/M7.pdf' },
-      M9: { code: 'M9', title: 'Esketamin', description: 'Trauma Schmerz.', meta: ['Analgesie'], pdf: 'pdfs/medikamente/M9.pdf' },
-      M12: { code: 'M12', title: 'Glukose', description: 'Hypoglykämie.', meta: ['BZ'], pdf: 'pdfs/medikamente/M12.pdf' },
-      M13: { code: 'M13', title: 'Glycerolnitrat', description: 'ACS und Dyspnoe.', meta: ['Nitrat'], pdf: 'pdfs/medikamente/M13.pdf' },
-      M14: { code: 'M14', title: 'Ipratropiumbromid', description: 'Atemwege.', meta: ['Vernebler'], pdf: 'pdfs/medikamente/M14.pdf' },
-      M15: { code: 'M15', title: 'Levetiracetam', description: 'Status epilepticus.', meta: ['Neurologie'], pdf: 'pdfs/medikamente/M15.pdf' },
-      M16: { code: 'M16', title: 'Midazolam', description: 'Krampfanfall und Sedierung.', meta: ['Sedierung'], pdf: 'pdfs/medikamente/M16.pdf' },
-      M17: { code: 'M17', title: 'Morphin', description: 'Thoraxschmerz.', meta: ['Analgesie'], pdf: 'pdfs/medikamente/M17.pdf' },
-      M18: { code: 'M18', title: 'Nalbuphin', description: 'Schmerz.', meta: ['Analgesie'], pdf: 'pdfs/medikamente/M18.pdf' },
-      M20: { code: 'M20', title: 'Paracetamol', description: 'Schmerz.', meta: ['Analgesie'], pdf: 'pdfs/medikamente/M20.pdf' },
-      M22: { code: 'M22', title: 'Prednisolon', description: 'Atemwege und Allergie.', meta: ['Entzündung'], pdf: 'pdfs/medikamente/M22.pdf' },
-      M23: { code: 'M23', title: 'Salbutamol', description: 'Atemwege.', meta: ['Bronchodilatation'], pdf: 'pdfs/medikamente/M23.pdf' },
-      M25: { code: 'M25', title: 'Thiamin', description: 'Hypoglykämie.', meta: ['Begleitmedikation'], pdf: 'pdfs/medikamente/M25.pdf' },
-      M26: { code: 'M26', title: 'Urapidil', description: 'Hypertonie.', meta: ['RR-Senkung'], pdf: 'pdfs/medikamente/M26.pdf' }
+      M3: {
+        code: 'M3',
+        title: 'Amiodaron',
+        description: 'Rhythmustherapie.',
+        meta: ['Reanimation'],
+        pdf: 'pdfs/medikamente/M3.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M4: {
+        code: 'M4',
+        title: 'Atropin',
+        description: 'Bradykardie.',
+        meta: ['Bradykardie'],
+        pdf: 'pdfs/medikamente/M4.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M5: {
+        code: 'M5',
+        title: 'Butylscopolamin',
+        description: 'Abdomen.',
+        meta: ['Spasmolyse'],
+        pdf: 'pdfs/medikamente/M5.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M6: {
+        code: 'M6',
+        title: 'Clemastinfumarat',
+        description: 'Allergie.',
+        meta: ['Antihistaminikum'],
+        pdf: 'pdfs/medikamente/M6.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M7: {
+        code: 'M7',
+        title: 'Dimenhydrinat',
+        description: 'Antiemese.',
+        meta: ['Übelkeit'],
+        pdf: 'pdfs/medikamente/M7.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M9: {
+        code: 'M9',
+        title: 'Esketamin',
+        description: 'Trauma Schmerz.',
+        meta: ['Analgesie'],
+        pdf: 'pdfs/medikamente/M9.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M12: {
+        code: 'M12',
+        title: 'Glukose',
+        description: 'Hypoglykämie.',
+        meta: ['BZ'],
+        pdf: 'pdfs/medikamente/M12.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M13: {
+        code: 'M13',
+        title: 'Glycerolnitrat',
+        description: 'ACS und Dyspnoe.',
+        meta: ['Nitrat'],
+        pdf: 'pdfs/medikamente/M13.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M14: {
+        code: 'M14',
+        title: 'Ipratropiumbromid',
+        description: 'Atemwege.',
+        meta: ['Vernebler'],
+        pdf: 'pdfs/medikamente/M14.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M15: {
+        code: 'M15',
+        title: 'Levetiracetam',
+        description: 'Status epilepticus.',
+        meta: ['Neurologie'],
+        pdf: 'pdfs/medikamente/M15.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M16: {
+        code: 'M16',
+        title: 'Midazolam',
+        description: 'Krampfanfall und Sedierung.',
+        meta: ['Sedierung'],
+        pdf: 'pdfs/medikamente/M16.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M17: {
+        code: 'M17',
+        title: 'Morphin',
+        description: 'Thoraxschmerz.',
+        meta: ['Analgesie'],
+        pdf: 'pdfs/medikamente/M17.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M18: {
+        code: 'M18',
+        title: 'Nalbuphin',
+        description: 'Schmerz.',
+        meta: ['Analgesie'],
+        pdf: 'pdfs/medikamente/M18.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M20: {
+        code: 'M20',
+        title: 'Paracetamol',
+        description: 'Schmerz.',
+        meta: ['Analgesie'],
+        pdf: 'pdfs/medikamente/M20.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M22: {
+        code: 'M22',
+        title: 'Prednisolon',
+        description: 'Atemwege und Allergie.',
+        meta: ['Entzündung'],
+        pdf: 'pdfs/medikamente/M22.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M23: {
+        code: 'M23',
+        title: 'Salbutamol',
+        description: 'Atemwege.',
+        meta: ['Bronchodilatation'],
+        pdf: 'pdfs/medikamente/M23.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M25: {
+        code: 'M25',
+        title: 'Thiamin',
+        description: 'Hypoglykämie.',
+        meta: ['Begleitmedikation'],
+        pdf: 'pdfs/medikamente/M25.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      },
+      M26: {
+        code: 'M26',
+        title: 'Urapidil',
+        description: 'Hypertonie.',
+        meta: ['RR-Senkung'],
+        pdf: 'pdfs/medikamente/M26.pdf',
+        structured: true,
+        indication: [''],
+        contraindication: [''],
+        dosage: [$1],
+        preparation: [''],
+        effect: [''],
+        sideEffects: ['$1']
+      }
     };
 
     const algorithmGrid = document.getElementById('algorithmGrid');
@@ -594,16 +858,30 @@
         const sections = [
           ['Indikation', med.indication, 'indication'],
           ['Kontraindikation', med.contraindication, 'contra'],
-          ['Nebenwirkungen', med.sideEffects, 'sideeffects'],
-          ['Dosierung / Aufziehanleitung', med.dosage, 'neutral']
-        ].filter(([, items]) => Array.isArray(items) && items.length);
+          ['Dosierung', med.dosage, 'neutral'],
+          ['Aufziehanleitung', med.preparation, 'neutral'],
+          ['Wirkung', med.effect, 'neutral'],
+          ['Nebenwirkungen', med.sideEffects, 'sideeffects']
+        ].filter(([, items]) => Array.isArray(items) && items.some(v => String(v).trim() !== ''));
 
-        structuredMedicationContent.innerHTML = sections.map(([title, items, boxClass]) => `
-          <section class="med-info-box ${boxClass}">
-            <h3 class="med-info-title">${title}</h3>
-            <ul class="med-info-list">${items.map(item => `<li>${item}</li>`).join('')}</ul>
+        structuredMedicationContent.innerHTML = sections.map(([title, items, boxClass], index) => `
+          <section class="med-accordion ${boxClass}">
+            <button class="med-accordion-btn" type="button" data-acc="${index}">
+              <span>${title}</span><span>▾</span>
+            </button>
+            <div class="med-accordion-content ${index === 0 ? '' : 'hidden'}" id="acc-${index}">
+              <ul class="med-info-list">${items.filter(item => String(item).trim() !== '').map(item => `<li>${item}</li>`).join('')}</ul>
+            </div>
           </section>
         `).join('');
+
+        structuredMedicationContent.querySelectorAll('[data-acc]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-acc');
+            const panel = document.getElementById(`acc-${id}`);
+            if (panel) panel.classList.toggle('hidden');
+          });
+        });
       } else {
         structuredMedicationBox.classList.add('hidden');
         structuredMedicationContent.innerHTML = '';
@@ -707,4 +985,3 @@
   </script>
 </body>
 </html>
-
