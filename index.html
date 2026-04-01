@@ -29,358 +29,127 @@
       color: var(--text);
       transition: background 0.2s ease, color 0.2s ease;
     }
-    .app {
-      max-width: 920px;
-      margin: 0 auto;
-      min-height: 100vh;
-      padding: env(safe-area-inset-top) 16px calc(env(safe-area-inset-bottom) + 24px);
-    }
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: color-mix(in srgb, var(--bg) 96%, transparent);
-      backdrop-filter: blur(12px);
-      padding: 14px 0 12px;
-    }
-    .topbar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .back-btn, .quick-btn, .fav-btn, .algo-card, .med-card-btn, .tab-btn, .nav-btn, .primary-btn, .secondary-btn {
-      font: inherit;
-    }
+    .app { max-width: 920px; margin: 0 auto; min-height: 100vh; padding: env(safe-area-inset-top) 16px calc(env(safe-area-inset-bottom) + 24px); }
+    .header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 96%, transparent); backdrop-filter: blur(12px); padding: 14px 0 12px; }
+    .topbar { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .back-btn, .quick-btn, .fav-btn, .algo-card, .med-card-btn, .tab-btn, .nav-btn { font: inherit; }
     .back-btn, .nav-btn {
-      appearance: none;
-      border: none;
-      background: var(--soft);
-      color: var(--text);
-      border-radius: 14px;
-      min-height: 44px;
-      padding: 0 14px;
-      font-weight: 700;
-      cursor: pointer;
+      appearance: none; border: none; background: var(--soft); color: var(--text); border-radius: 14px; min-height: 44px; padding: 0 14px; font-weight: 700; cursor: pointer;
     }
-    .title {
-      font-size: 1.7rem;
-      font-weight: 800;
-      margin: 0;
-      line-height: 1.1;
-    }
+    .title { font-size: 1.7rem; font-weight: 800; margin: 0; line-height: 1.1; }
     .mini-label, .section-title {
-      color: var(--muted);
-      font-size: 0.86rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin: 18px 0 10px;
+      color: var(--muted); font-size: 0.86rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; margin: 18px 0 10px;
     }
-    .tabs {
-      display: flex;
-      gap: 10px;
-      margin: 8px 0 12px;
-      flex-wrap: wrap;
-    }
+    .tabs { display: flex; gap: 10px; margin: 8px 0 12px; flex-wrap: wrap; }
     .tab-btn {
-      appearance: none;
-      border: none;
-      border-radius: 16px;
-      min-height: 44px;
-      padding: 12px 16px;
-      cursor: pointer;
-      font-weight: 700;
-      background: var(--soft);
-      color: var(--text);
+      appearance: none; border: none; border-radius: 16px; min-height: 44px; padding: 12px 16px; cursor: pointer; font-weight: 700; background: var(--soft); color: var(--text);
     }
-    .tab-btn.active {
-      background: var(--brand);
-      color: white;
-    }
-    .favorites-row {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 2px;
-    }
+    .tab-btn.active { background: var(--brand); color: white; }
+    .favorites-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 2px; }
     .search input {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px 16px;
-      font-size: 1rem;
-      background: var(--card);
-      color: var(--text);
-      outline: none;
+      width: 100%; border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; font-size: 1rem; background: var(--card); color: var(--text); outline: none;
     }
     .quick-btn {
-      appearance: none;
-      border: none;
-      border-radius: 16px;
-      min-height: 44px;
-      padding: 12px 14px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      white-space: nowrap;
-      background: var(--soft);
-      color: var(--text);
+      appearance: none; border: none; border-radius: 16px; min-height: 44px; padding: 12px 14px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; white-space: nowrap; background: var(--soft); color: var(--text);
     }
-    .button-grid, .med-grid, .related-grid {
-      display: grid;
-      gap: 12px;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    .button-grid, .med-grid, .related-grid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .algo-card, .med-card-btn {
-      appearance: none;
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: var(--card);
-      text-align: left;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      padding: 16px;
-      position: relative;
-      min-height: 92px;
-      color: var(--text);
+      appearance: none; width: 100%; border: 1px solid var(--border); border-radius: 20px; background: var(--card); text-align: left; cursor: pointer; box-shadow: var(--shadow); padding: 16px; position: relative; min-height: 92px; color: var(--text);
     }
     .fav-btn {
-      appearance: none;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--card);
-      width: 38px;
-      height: 38px;
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-      font-size: 1rem;
-      line-height: 1;
-      color: var(--text);
+      appearance: none; border: 1px solid var(--border); border-radius: 999px; background: var(--card); width: 38px; height: 38px; position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 1rem; line-height: 1; color: var(--text);
     }
-    .fav-btn.active {
-      background: #fff5f5;
-      color: var(--brand);
-      border-color: #f2c8c8;
-    }
-    .algo-code, .med-code {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: var(--brand);
-      letter-spacing: 0.04em;
-      margin-bottom: 8px;
-    }
-    .algo-name, .med-name {
-      display: block;
-      font-size: 1rem;
-      font-weight: 800;
-      line-height: 1.3;
-      color: var(--text);
-      padding-right: 40px;
-    }
+    .fav-btn.active { background: #fff5f5; color: var(--brand); border-color: #f2c8c8; }
+    .algo-code, .med-code { display: inline-block; font-size: 0.8rem; font-weight: 800; color: var(--brand); letter-spacing: 0.04em; margin-bottom: 8px; }
+    .algo-name, .med-name { display: block; font-size: 1rem; font-weight: 800; line-height: 1.3; color: var(--text); padding-right: 40px; }
     .detail-card, .pdf-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: var(--shadow);
-      margin-bottom: 14px;
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); margin-bottom: 14px;
     }
-    .detail-toolbar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .detail-toolbar-left, .detail-toolbar-right {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
+    .detail-toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .detail-toolbar-left, .detail-toolbar-right { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
     .pdf-frame-wrap {
-      width: 100%;
-      border-radius: 18px;
-      overflow: auto;
-      background: color-mix(in srgb, var(--card) 94%, #f8fafc);
-      border: 1px solid var(--border);
-      padding: 10px;
+      width: 100%; border-radius: 18px; overflow: auto; background: color-mix(in srgb, var(--card) 94%, #f8fafc); border: 1px solid var(--border); padding: 10px;
     }
     .pdf-viewer {
-      width: 100%;
-      min-height: 60vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      width: 100%; min-height: 60vh; display: flex; justify-content: center; align-items: flex-start;
     }
     .pdf-canvas {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      background: white;
+      max-width: 100%; height: auto; display: block; box-shadow: 0 2px 10px rgba(0,0,0,0.08); background: white;
     }
     .pdf-status {
-      color: var(--muted);
-      font-size: 0.92rem;
+      color: var(--muted); font-size: 0.92rem;
     }
-    .detail-title {
-      font-size: 1.3rem;
-      font-weight: 800;
-      margin: 0 0 8px;
-      line-height: 1.2;
-    }
-    .detail-text {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-    .chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-    .chip {
-      background: #fff5f5;
-      color: var(--brand);
-      border: 1px solid #f2c8c8;
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 0.88rem;
-      font-weight: 700;
-    }
-    .stack-title {
-      margin: 0 0 10px;
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .empty-box {
-      color: var(--muted);
-      background: color-mix(in srgb, var(--card) 96%, #fafbfc);
-      border: 1px dashed var(--border);
-      border-radius: 18px;
-      padding: 14px;
-      line-height: 1.5;
-    }
+    .detail-title { font-size: 1.3rem; font-weight: 800; margin: 0 0 8px; line-height: 1.2; }
+    .detail-text { margin: 0; color: var(--muted); line-height: 1.55; }
     .med-structured-grid {
-      display: grid;
-      gap: 12px;
-      grid-template-columns: 1fr;
-      margin-top: 14px;
+      display: grid; gap: 12px; grid-template-columns: 1fr; margin-top: 14px;
     }
-    .med-accordion {
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      overflow: hidden;
+    .med-info-box {
+      border: 1px solid var(--border); background: color-mix(in srgb, var(--card) 96%, #fafbfc); border-radius: 18px; padding: 14px;
+    }
+    .med-info-box.indication {
+      background: #eef9f0;
+      border-color: #cfe8d4;
+      color: #1f2937;
+    }
+    body.dark .med-info-box.indication {
+      background: #1f3a2a;
+      border-color: #2f5d3f;
+      color: #e6f4ea;
+    }
+    .med-info-box.contra {
+      background: #fff1f1;
+      border-color: #f2c8c8;
+      color: #1f2937;
+    }
+    body.dark .med-info-box.contra {
+      background: #3a1f1f;
+      border-color: #5d2f2f;
+      color: #fde8e8;
+    }
+    .med-info-box.neutral {
       background: var(--card);
+      border-color: var(--border);
+      color: var(--text);
     }
-    .med-accordion.indication { background: #eef9f0; border-color: #cfe8d4; color: #1f2937; }
-    .med-accordion.contra { background: #fff1f1; border-color: #f2c8c8; color: #1f2937; }
-    .med-accordion.sideeffects { background: #fff7f7; border-color: #f4d7d7; color: #1f2937; }
-    .med-accordion.neutral { background: var(--card); border-color: var(--border); color: var(--text); }
-    body.dark .med-accordion.indication { background: #1f3a2a; border-color: #2f5d3f; color: #e6f4ea; }
-    body.dark .med-accordion.contra { background: #3a1f1f; border-color: #5d2f2f; color: #fde8e8; }
-    body.dark .med-accordion.sideeffects { background: #332424; border-color: #5a3a3a; color: #fbeaea; }
-    body.dark .med-accordion.neutral { background: var(--card); border-color: var(--border); color: var(--text); }
-    .med-accordion-btn {
-      width: 100%;
-      appearance: none;
-      border: none;
-      background: transparent;
-      color: inherit;
-      text-align: left;
-      padding: 16px 18px;
-      font-weight: 800;
-      font-size: 0.98rem;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .med-info-box.sideeffects {
+      background: #fff7f7;
+      border-color: #f4d7d7;
+      color: #1f2937;
     }
-    .med-accordion-content { padding: 0 18px 16px; }
-    .med-accordion-content.hidden { display: none; }
+    body.dark .med-info-box.sideeffects {
+      background: #332424;
+      border-color: #5a3a3a;
+      color: #fbeaea;
+    }
+    .med-info-title {
+      margin: 0 0 8px; font-size: 0.9rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em;
+    }
     .med-info-list {
-      margin: 0;
-      padding-left: 18px;
-      color: inherit;
-      line-height: 1.55;
+      margin: 0; padding-left: 18px; color: var(--text); line-height: 1.55;
     }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .chip {
+      background: #fff5f5; color: var(--brand); border: 1px solid #f2c8c8; border-radius: 999px; padding: 8px 12px; font-size: 0.88rem; font-weight: 700;
+    }
+    .stack-title { margin: 0 0 10px; font-size: 1rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    .empty-box { color: var(--muted); background: color-mix(in srgb, var(--card) 96%, #fafbfc); border: 1px dashed var(--border); border-radius: 18px; padding: 14px; line-height: 1.5; }
     .hidden { display: none !important; }
-    .footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.84rem;
-      padding: 10px 0 14px;
-    }
+    .footer { text-align: center; color: var(--muted); font-size: 0.84rem; padding: 10px 0 14px; }
     .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      padding: 20px;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px;
     }
     .modal-card {
-      width: 100%;
-      max-width: 520px;
-      background: var(--card);
-      color: var(--text);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      padding: 24px;
+      width: 100%; max-width: 520px; background: var(--card); color: var(--text); border-radius: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); padding: 24px;
     }
-    .modal-title {
-      margin: 0 0 10px;
-      font-size: 1.35rem;
-      font-weight: 800;
-    }
-    .modal-text {
-      margin: 0 0 16px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
+    .modal-title { margin: 0 0 10px; font-size: 1.35rem; font-weight: 800; }
+    .modal-text { margin: 0 0 16px; color: var(--muted); line-height: 1.6; }
+    .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
     .primary-btn {
-      appearance: none;
-      border: none;
-      border-radius: 16px;
-      min-height: 46px;
-      padding: 0 18px;
-      cursor: pointer;
-      font-weight: 800;
-      background: var(--brand);
-      color: white;
+      appearance: none; border: none; border-radius: 16px; min-height: 46px; padding: 0 18px; cursor: pointer; font-weight: 800; background: var(--brand); color: white;
     }
     .secondary-btn {
-      appearance: none;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      min-height: 46px;
-      padding: 0 18px;
-      cursor: pointer;
-      font-weight: 700;
-      background: var(--soft);
-      color: var(--text);
+      appearance: none; border: 1px solid var(--border); border-radius: 16px; min-height: 46px; padding: 0 18px; cursor: pointer; font-weight: 700; background: var(--soft); color: var(--text);
     }
     @media (max-width: 700px) {
       .button-grid, .med-grid, .related-grid { grid-template-columns: 1fr; }
@@ -393,15 +162,20 @@
   <div id="disclaimerModal" class="modal-overlay hidden">
     <div class="modal-card">
       <h2 class="modal-title">Wichtiger Hinweis</h2>
-      <p class="modal-text">Diese App ist <strong>kein offizielles Nachschlagewerk</strong> und <strong>kein freigegebenes medizinisches Dokument</strong>. Sie dient ausschließlich als unterstützende Schnellübersicht. Maßgeblich sind immer die aktuell gültigen offiziellen Unterlagen, Standards, SOPs und ärztlichen Anweisungen.</p>
-      <p class="modal-text">Die Nutzung erfolgt <strong>auf eigene Verantwortung</strong>. Eine Haftung für Inhalte, Vollständigkeit, Aktualität oder daraus entstehende Maßnahmen ist ausgeschlossen.</p>
+      <p class="modal-text">
+        Diese App ist <strong>kein offizielles Nachschlagewerk</strong> und <strong>kein freigegebenes medizinisches Dokument</strong>.
+        Sie dient ausschließlich als unterstützende Schnellübersicht.
+        Maßgeblich sind immer die aktuell gültigen offiziellen Unterlagen, Standards, SOPs und ärztlichen Anweisungen.
+      </p>
+      <p class="modal-text">
+        Die Nutzung erfolgt <strong>auf eigene Verantwortung</strong>. Eine Haftung für Inhalte, Vollständigkeit, Aktualität oder daraus entstehende Maßnahmen ist ausgeschlossen.
+      </p>
       <div class="modal-actions">
         <button id="declineDisclaimer" class="secondary-btn" type="button">Schließen</button>
         <button id="acceptDisclaimer" class="primary-btn" type="button">Verstanden</button>
       </div>
     </div>
   </div>
-
   <div class="app">
     <header class="header">
       <div class="topbar">
@@ -481,6 +255,7 @@
     <p class="footer">PDF.js Version · Home-Bildschirm-sicher mit echtem Zurück<br><span style="font-size:0.7rem; opacity:0.8;">Haftung ausgeschlossen · Kein offizielles Nachschlagewerk · Nur zur Unterstützung im Einsatz</span></p>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
   <script type="module">
     import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs';
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
@@ -488,8 +263,8 @@
     const FAVORITES_KEY = 'evm-favorites-v1';
     const THEME_KEY = 'evm-theme-v1';
     const DISCLAIMER_KEY = 'evm-disclaimer-accepted-v1';
-
     let currentMode = 'algorithms';
+    let currentOpenPdf = '';
     let pdfDoc = null;
     let currentPage = 1;
     let fitMode = 'width';
@@ -508,7 +283,9 @@
       { code: 'K9', title: 'Anaphylaxie', description: 'Allergische Reaktion.', tags: ['Allergie'], pdf: 'pdfs/algorithmen/K9.pdf', meds: ['M6', 'M22', 'M2'], related: ['K5', 'K6', 'K7'] },
       { code: 'K10', title: 'Status Epilepticus', description: 'Krampfanfall.', tags: ['Neurologie'], pdf: 'pdfs/algorithmen/K10.pdf', meds: ['M16', 'M15'], related: [] },
       { code: 'K11', title: 'Schlaganfall', description: 'Stroke Algorithmus.', tags: ['FAST'], pdf: 'pdfs/algorithmen/K11.pdf', meds: [], related: [] },
-      { code: 'K13', title: 'Geburt / Neugeborenes', description: 'Geburt mit Folgepfaden und APGAR.', tags: ['Geburt'], pdf: 'pdfs/algorithmen/K13.pdf', meds: [], related: ['APGAR'] },
+      { code: 'K12', title: 'Geburt / Neugeborenes', description: 'Geburt mit Folgepfaden Neugeborenes und APGAR.', tags: ['Geburt'], pdf: 'pdfs/algorithmen/K12.pdf', meds: [], related: ['K13', 'K14', 'APGAR'] },
+      { code: 'K13', title: 'Einsetzende Geburt', description: 'Geburt.', tags: ['Geburt'], pdf: 'pdfs/algorithmen/K13.pdf', meds: [], related: ['K14', 'APGAR'] },
+      { code: 'K14', title: 'Neugeborenes', description: 'Erstversorgung.', tags: ['APGAR'], pdf: 'pdfs/algorithmen/K14.pdf', meds: [], related: ['APGAR'] },
       { code: 'K15', title: 'Post Reanimation', description: 'Nach ROSC.', tags: ['ROSC'], pdf: 'pdfs/algorithmen/K15.pdf', meds: [], related: ['REA'] },
       { code: 'K16', title: 'Schmerz Übersicht', description: 'Schmerzübersicht mit Unteralgorithmen.', tags: ['Analgesie'], pdf: 'pdfs/algorithmen/K16.pdf', meds: [], related: ['K16a', 'K16b', 'K16c', 'K16d'] },
       { code: 'K16a', title: 'Abdomen Schmerz', description: 'Abdomineller Schmerz.', tags: ['Abdomen'], pdf: 'pdfs/algorithmen/K16a.pdf', meds: ['M5', 'M18', 'M20'], related: ['K16'] },
@@ -519,7 +296,7 @@
       { code: 'K18', title: 'Sepsis', description: 'Sepsis.', tags: ['Schock'], pdf: 'pdfs/algorithmen/K18.pdf', meds: [], related: [] },
       { code: 'K19', title: 'CO Vergiftung', description: 'Kohlenmonoxid-Vergiftung.', tags: ['CO'], pdf: 'pdfs/algorithmen/K19.pdf', meds: [], related: [] },
       { code: 'REA', title: 'Reanimation', description: 'ALS.', tags: ['Reanimation'], pdf: 'pdfs/algorithmen/REA.pdf', meds: ['M2', 'M3'], related: ['K15'] },
-      { code: 'APGAR', title: 'APGAR Score', description: 'Neugeborenen Score.', tags: ['Score'], pdf: 'pdfs/algorithmen/APGAR.pdf', meds: [], related: ['K13'] },
+      { code: 'APGAR', title: 'APGAR Score', description: 'Neugeborenen Score.', tags: ['Score'], pdf: 'pdfs/algorithmen/APGAR.pdf', meds: [], related: ['K14'] },
       { code: 'DOSIS', title: 'Dosiertabelle', description: 'Dosierungen.', tags: ['Dosierung'], pdf: 'pdfs/algorithmen/DOSIS.pdf', meds: [], related: [] },
       { code: 'AUFZIEH', title: 'Aufziehanleitung', description: 'Aufziehen.', tags: ['Zubereitung'], pdf: 'pdfs/algorithmen/AUFZIEH.pdf', meds: [], related: [] },
       { code: 'CPAP', title: 'CPAP Algorithmus', description: 'Unterstützende Beatmung per CPAP.', tags: ['CPAP'], pdf: 'pdfs/algorithmen/CPAP.pdf', meds: [], related: ['K2'] },
@@ -527,50 +304,40 @@
       { code: 'SCHOCKRAUM', title: 'Schockraumkriterien', description: 'Kriterien für Schockraum-Zuweisung.', tags: ['Trauma'], pdf: 'pdfs/algorithmen/SCHOCKRAUM.pdf', meds: [], related: ['K0b'] }
     ];
 
-    function medTemplate(code, title, description, meta) {
-      return {
-        code,
-        title,
-        description,
-        meta,
-        pdf: `pdfs/medikamente/${code}.pdf`,
-        structured: true,
-        indication: [''],
-        contraindication: [''],
-        dosage: [''],
-        preparation: [''],
-        effect: [''],
-        sideEffects: ['']
-      };
-    }
-
     const medications = {
-      M1: medTemplate('M1', 'Acetylsalicylsäure', 'ASS im EVM-Kontext.', ['ACS', 'ASS']),
+      M1: { code: 'M1', title: 'Acetylsalicylsäure', description: 'ASS im EVM-Kontext.', meta: ['ACS', 'ASS'], pdf: 'pdfs/medikamente/M1.pdf' },
       M2: {
-        ...medTemplate('M2', 'Adrenalin', 'Notfallmedikament.', ['Notfall']),
-        indication: ['Reanimation', 'Anaphylaxie', 'Obere Atemwegsobstruktion je nach Standard'],
-        contraindication: ['Im vitalen Notfall keine absolute Kontraindikation', 'Anwendung immer nach lokalem Standard und Freigabe'],
-        dosage: ['Reanimation: nach gültigem Algorithmus / Standard', 'Anaphylaxie: nach lokalem Dosierschema', 'Kinder: alters- und gewichtsadaptiert'],
-        sideEffects: ['Tachykardie', 'Rhythmusstörungen', 'Hypertonie', 'Unruhe / Tremor']
+        code: 'M2',
+        title: 'Adrenalin',
+        description: 'Notfallmedikament.',
+        meta: ['Notfall'],
+        pdf: 'pdfs/medikamente/M2.pdf',
+        structured: true,
+        indication: ['Reanimation', 'Anaphylaxie', 'Obere Atemwegsobstruktion' , 'Bedrohliche Bradykardie'],
+        contraindication: ['Im vitalen Notfall keine absolute Kontraindikation', 'Allergie gegen den Wirkstoff'],
+        dosage: ['Reanimation Erw./Jugendl.: 1 mg i.v./i.o.','Reanimation Kind: 0,01 mg/kgKG i.v./i.o', 'Anaphylaxie:  bis 30 kgKG: 0,01 mg/kg i.m, 30–60 kgKG: 0,1 mg/10 kgKG i.m., 60 kgKG: 0,6 mg i.m', 'Bradykardie:  Überbrückende Maßnahme: 1mg + 99ml NaCl 0,9% (1:100), dann 0,01mg (1ml) i.v., Adrenalin-Spritzenpumpe: 5 mg/50 ml (+ 45 ml NaCl 0,9 %), Start: 1,2 ml/h = 2 µg/min, Laufgeschwindigkeit anpassen zwischen 1,2 – 7,2 ml/h = 2 – 12 µg/min'],
+        effect: ['Vasokonstriktion', 'Bronchodilatation', 'Steigerung von Herzfrequenz und Kontraktilität'],
+        sideEffects: ['Tachykardie', 'Rhythmusstörungen', 'Hypertonie', 'Unruhe / Tremor'],
+        notes: ['Nur als App-Vorlage dargestellt', 'Maßgeblich bleiben offizielle Unterlagen und Freigaben']
       },
-      M3: medTemplate('M3', 'Amiodaron', 'Rhythmustherapie.', ['Reanimation']),
-      M4: medTemplate('M4', 'Atropin', 'Bradykardie.', ['Bradykardie']),
-      M5: medTemplate('M5', 'Butylscopolamin', 'Abdomen.', ['Spasmolyse']),
-      M6: medTemplate('M6', 'Clemastinfumarat', 'Allergie.', ['Antihistaminikum']),
-      M7: medTemplate('M7', 'Dimenhydrinat', 'Antiemese.', ['Übelkeit']),
-      M9: medTemplate('M9', 'Esketamin', 'Trauma Schmerz.', ['Analgesie']),
-      M12: medTemplate('M12', 'Glukose', 'Hypoglykämie.', ['BZ']),
-      M13: medTemplate('M13', 'Glycerolnitrat', 'ACS und Dyspnoe.', ['Nitrat']),
-      M14: medTemplate('M14', 'Ipratropiumbromid', 'Atemwege.', ['Vernebler']),
-      M15: medTemplate('M15', 'Levetiracetam', 'Status epilepticus.', ['Neurologie']),
-      M16: medTemplate('M16', 'Midazolam', 'Krampfanfall und Sedierung.', ['Sedierung']),
-      M17: medTemplate('M17', 'Morphin', 'Thoraxschmerz.', ['Analgesie']),
-      M18: medTemplate('M18', 'Nalbuphin', 'Schmerz.', ['Analgesie']),
-      M20: medTemplate('M20', 'Paracetamol', 'Schmerz.', ['Analgesie']),
-      M22: medTemplate('M22', 'Prednisolon', 'Atemwege und Allergie.', ['Entzündung']),
-      M23: medTemplate('M23', 'Salbutamol', 'Atemwege.', ['Bronchodilatation']),
-      M25: medTemplate('M25', 'Thiamin', 'Hypoglykämie.', ['Begleitmedikation']),
-      M26: medTemplate('M26', 'Urapidil', 'Hypertonie.', ['RR-Senkung'])
+      M3: { code: 'M3', title: 'Amiodaron', description: 'Rhythmustherapie.', meta: ['Reanimation'], pdf: 'pdfs/medikamente/M3.pdf' },
+      M4: { code: 'M4', title: 'Atropin', description: 'Bradykardie.', meta: ['Bradykardie'], pdf: 'pdfs/medikamente/M4.pdf' },
+      M5: { code: 'M5', title: 'Butylscopolamin', description: 'Abdomen.', meta: ['Spasmolyse'], pdf: 'pdfs/medikamente/M5.pdf' },
+      M6: { code: 'M6', title: 'Clemastinfumarat', description: 'Allergie.', meta: ['Antihistaminikum'], pdf: 'pdfs/medikamente/M6.pdf' },
+      M7: { code: 'M7', title: 'Dimenhydrinat', description: 'Antiemese.', meta: ['Übelkeit'], pdf: 'pdfs/medikamente/M7.pdf' },
+      M9: { code: 'M9', title: 'Esketamin', description: 'Trauma Schmerz.', meta: ['Analgesie'], pdf: 'pdfs/medikamente/M9.pdf' },
+      M12: { code: 'M12', title: 'Glukose', description: 'Hypoglykämie.', meta: ['BZ'], pdf: 'pdfs/medikamente/M12.pdf' },
+      M13: { code: 'M13', title: 'Glycerolnitrat', description: 'ACS und Dyspnoe.', meta: ['Nitrat'], pdf: 'pdfs/medikamente/M13.pdf' },
+      M14: { code: 'M14', title: 'Ipratropiumbromid', description: 'Atemwege.', meta: ['Vernebler'], pdf: 'pdfs/medikamente/M14.pdf' },
+      M15: { code: 'M15', title: 'Levetiracetam', description: 'Status epilepticus.', meta: ['Neurologie'], pdf: 'pdfs/medikamente/M15.pdf' },
+      M16: { code: 'M16', title: 'Midazolam', description: 'Krampfanfall und Sedierung.', meta: ['Sedierung'], pdf: 'pdfs/medikamente/M16.pdf' },
+      M17: { code: 'M17', title: 'Morphin', description: 'Thoraxschmerz.', meta: ['Analgesie'], pdf: 'pdfs/medikamente/M17.pdf' },
+      M18: { code: 'M18', title: 'Nalbuphin', description: 'Schmerz.', meta: ['Analgesie'], pdf: 'pdfs/medikamente/M18.pdf' },
+      M20: { code: 'M20', title: 'Paracetamol', description: 'Schmerz.', meta: ['Analgesie'], pdf: 'pdfs/medikamente/M20.pdf' },
+      M22: { code: 'M22', title: 'Prednisolon', description: 'Atemwege und Allergie.', meta: ['Entzündung'], pdf: 'pdfs/medikamente/M22.pdf' },
+      M23: { code: 'M23', title: 'Salbutamol', description: 'Atemwege.', meta: ['Bronchodilatation'], pdf: 'pdfs/medikamente/M23.pdf' },
+      M25: { code: 'M25', title: 'Thiamin', description: 'Hypoglykämie.', meta: ['Begleitmedikation'], pdf: 'pdfs/medikamente/M25.pdf' },
+      M26: { code: 'M26', title: 'Urapidil', description: 'Hypertonie.', meta: ['RR-Senkung'], pdf: 'pdfs/medikamente/M26.pdf' }
     };
 
     const algorithmGrid = document.getElementById('algorithmGrid');
@@ -609,8 +376,8 @@
     const declineDisclaimer = document.getElementById('declineDisclaimer');
 
     function applyTheme(theme) {
+      document.body.classList.toggle('dark', theme === 'dark');
       const dark = theme === 'dark';
-      document.body.classList.toggle('dark', dark);
       document.documentElement.style.setProperty('--bg', dark ? '#111827' : '#f4f6fa');
       document.documentElement.style.setProperty('--card', dark ? '#1f2937' : '#ffffff');
       document.documentElement.style.setProperty('--text', dark ? '#f9fafb' : '#1f2937');
@@ -622,6 +389,7 @@
     }
 
     async function loadPdfInApp(url) {
+      currentOpenPdf = url;
       pdfPageInfo.textContent = 'Lade PDF…';
       try {
         pdfDoc = await pdfjsLib.getDocument(url).promise;
@@ -766,8 +534,6 @@
       detailView.classList.remove('hidden');
       backButton.classList.remove('hidden');
       favoritesSection.classList.add('hidden');
-      structuredMedicationBox.classList.add('hidden');
-      structuredMedicationContent.innerHTML = '';
       detailCode.textContent = algorithm.code;
       detailToolbarTitle.textContent = algorithm.title;
       detailTitle.textContent = algorithm.title;
@@ -780,8 +546,8 @@
       if (!algorithm.meds.length) {
         medGrid.innerHTML = '<div class="empty-box">Für diesen Eintrag ist aktuell keine Medikamenten-Schnellauswahl hinterlegt.</div>';
       } else {
-        medGrid.innerHTML = algorithm.meds.map(medCode => {
-          const med = medications[medCode];
+        medGrid.innerHTML = algorithm.meds.map(code => {
+          const med = medications[code];
           if (!med) return '';
           return `<button class="med-card-btn" data-med="${med.code}" type="button"><span class="med-code">${med.code}</span><span class="med-name">${med.title}</span></button>`;
         }).join('');
@@ -794,8 +560,8 @@
       if (!related.length) {
         relatedGrid.innerHTML = '<div class="empty-box">Für diesen Eintrag sind aktuell keine weiteren Algorithmen hinterlegt.</div>';
       } else {
-        relatedGrid.innerHTML = related.map(relatedCode => {
-          const item = algorithms.find(entry => entry.code === relatedCode);
+        relatedGrid.innerHTML = related.map(code => {
+          const item = algorithms.find(entry => entry.code === code);
           if (!item) return '';
           return `<button class="med-card-btn" data-related="${item.code}" type="button"><span class="med-code">${item.code}</span><span class="med-name">${item.title}</span></button>`;
         }).join('');
@@ -822,42 +588,28 @@
       detailTags.innerHTML = med.meta.map(entry => `<span class="chip">${entry}</span>`).join('');
       detailMedsSection.classList.add('hidden');
       detailRelatedSection.classList.add('hidden');
-      openPdfExternalButton.onclick = () => openPdfExternal(med.pdf);
 
       if (med.structured) {
         structuredMedicationBox.classList.remove('hidden');
         const sections = [
           ['Indikation', med.indication, 'indication'],
           ['Kontraindikation', med.contraindication, 'contra'],
-          ['Dosierung', med.dosage, 'neutral'],
-          ['Aufziehanleitung', med.preparation, 'neutral'],
-          ['Wirkung', med.effect, 'neutral'],
-          ['Nebenwirkungen', med.sideEffects, 'sideeffects']
-        ].filter(([, items]) => Array.isArray(items) && items.some(v => String(v).trim() !== ''));
+          ['Nebenwirkungen', med.sideEffects, 'sideeffects'],
+          ['Dosierung / Aufziehanleitung', med.dosage, 'neutral']
+        ].filter(([, items]) => Array.isArray(items) && items.length);
 
-        structuredMedicationContent.innerHTML = sections.map(([title, items, boxClass], index) => `
-          <section class="med-accordion ${boxClass}">
-            <button class="med-accordion-btn" type="button" data-acc="${index}">
-              <span>${title}</span><span>▾</span>
-            </button>
-            <div class="med-accordion-content ${index === 0 ? '' : 'hidden'}" id="acc-${index}">
-              <ul class="med-info-list">${items.filter(item => String(item).trim() !== '').map(item => `<li>${item}</li>`).join('')}</ul>
-            </div>
+        structuredMedicationContent.innerHTML = sections.map(([title, items, boxClass]) => `
+          <section class="med-info-box ${boxClass}">
+            <h3 class="med-info-title">${title}</h3>
+            <ul class="med-info-list">${items.map(item => `<li>${item}</li>`).join('')}</ul>
           </section>
         `).join('');
-
-        structuredMedicationContent.querySelectorAll('[data-acc]').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const id = btn.getAttribute('data-acc');
-            const panel = document.getElementById(`acc-${id}`);
-            if (panel) panel.classList.toggle('hidden');
-          });
-        });
       } else {
         structuredMedicationBox.classList.add('hidden');
         structuredMedicationContent.innerHTML = '';
       }
 
+      openPdfExternalButton.onclick = () => openPdfExternal(med.pdf);
       await loadPdfInApp(med.pdf);
     }
 
@@ -897,20 +649,6 @@
       else renderMedicationList(value);
     }
 
-    function showDisclaimerIfNeeded() {
-      const accepted = localStorage.getItem(DISCLAIMER_KEY) === 'yes';
-      if (!accepted) disclaimerModal.classList.remove('hidden');
-    }
-
-    acceptDisclaimer.addEventListener('click', () => {
-      localStorage.setItem(DISCLAIMER_KEY, 'yes');
-      disclaimerModal.classList.add('hidden');
-    });
-
-    declineDisclaimer.addEventListener('click', () => {
-      window.location.href = 'about:blank';
-    });
-
     searchInput.addEventListener('input', applySearch);
     backButton.addEventListener('click', goHome);
     inlineBackButton.addEventListener('click', goHome);
@@ -947,6 +685,20 @@
     } else {
       preloadAllPdfs();
     }
+
+    function showDisclaimerIfNeeded() {
+      const accepted = localStorage.getItem(DISCLAIMER_KEY) === 'yes';
+      if (!accepted) disclaimerModal.classList.remove('hidden');
+    }
+
+    acceptDisclaimer.addEventListener('click', () => {
+      localStorage.setItem(DISCLAIMER_KEY, 'yes');
+      disclaimerModal.classList.add('hidden');
+    });
+
+    declineDisclaimer.addEventListener('click', () => {
+      window.location.href = 'about:blank';
+    });
 
     applyTheme(localStorage.getItem(THEME_KEY) || 'light');
     showDisclaimerIfNeeded();
